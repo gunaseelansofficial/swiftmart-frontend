@@ -7,6 +7,7 @@ import {
     ShoppingBag,
     ArrowRight,
     ChevronLeft,
+    ChevronRight,
     Ticket,
     Info
 } from 'lucide-react';

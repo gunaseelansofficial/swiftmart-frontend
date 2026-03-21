@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-primary: #7C3AED;
+  --color-brand-secondary: #C026D3;
+  --color-brand-accent: #00D4AA;
+  --color-dark-bg: #0D1B2A;
+  --color-light-bg: #FFF8F0;
+
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 8px 40px rgba(124, 58, 237, 0.2);
+}
+
+:root {
+  --brand-primary: #7C3AED;
+  --brand-secondary: #C026D3;
+  --brand-accent: #00D4AA;
+  --dark-bg: #0D1B2A;
+  --light-bg: #FFF8F0;
+  --font-heading: "Outfit", sans-serif;
+  --font-body: "Outfit", sans-serif;
+}
+
+/* Custom Scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Mobile specific utilities */
+@media (max-width: 768px) {
+  .mobile-touch-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
+  
+  .tap-target {
+    min-height: 48px;
+    min-width: 48px;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--light-bg);
+  color: #1A1A2E;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+}
+
+@utility btn-primary {
+  @apply bg-gradient-to-r from-brand-primary to-brand-secondary text-white font-bold py-3 px-8 rounded-full transition-all duration-300 hover:scale-105 shadow-md;
+}
+
+@utility card {
+  @apply bg-white rounded-md p-4 shadow-card transition-all duration-300 hover:-translate-y-1;
+}
+
+.input-field {
+  @apply w-full p-4 rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 transition-all;
+}

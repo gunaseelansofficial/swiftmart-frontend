@@ -1,0 +1,23 @@
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
+import { store } from './store'
+import { SocketProvider } from './context/SocketContext'
+import './index.css'
+import App from './App.jsx'
+import ErrorBoundary from './components/shared/ErrorBoundary'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <Provider store={store}>
+      <SocketProvider>
+        <BrowserRouter>
+          <ErrorBoundary>
+            <App />
+          </ErrorBoundary>
+        </BrowserRouter>
+      </SocketProvider>
+    </Provider>
+  </StrictMode>,
+)

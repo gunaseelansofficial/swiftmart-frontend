@@ -66,11 +66,12 @@ const ProductCard = ({ product }) => {
             layout
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="bg-white rounded-md p-4 shadow-card border border-gray-100 group md:hover:shadow-hover transition-all relative min-w-[200px]"
+            whileHover={{ y: -4 }}
+            className="bg-white rounded-[16px] p-4 shadow-sm border border-card-border group hover:shadow-hover transition-all duration-300 relative"
         >
             {/* Discount Badge */}
             {product.discountPercent > 0 && (
-                <div className="absolute top-4 left-4 z-10 bg-brand-primary text-white text-[10px] font-bold px-2 py-1 rounded-md shadow-lg">
+                <div className="absolute top-3 left-3 z-10 bg-brand-primary text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm">
                     {product.discountPercent}% OFF
                 </div>
             )}
@@ -78,12 +79,12 @@ const ProductCard = ({ product }) => {
             {/* Wishlist Button */}
             <button
                 onClick={handleToggleWishlist}
-                className={`absolute top-4 right-4 z-10 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center transition-all shadow-sm ${isWishlisted ? 'text-red-500' : 'text-gray-400 md:hover:text-red-500 md:hover:scale-110 active:scale-95'}`}
+                className={`absolute top-3 right-3 z-10 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center transition-all shadow-sm ${isWishlisted ? 'text-red-500' : 'text-text-secondary hover:text-red-500 hover:scale-110 active:scale-95'}`}
             >
-                <Heart size={18} fill={isWishlisted ? "currentColor" : "none"} />
+                <Heart size={16} fill={isWishlisted ? "currentColor" : "none"} />
             </button>
 
-            <Link to={`/product/${product._id}`} className="block mb-4 overflow-hidden rounded-md aspect-square bg-brand-primary/5 relative">
+            <Link to={`/product/${product._id}`} className="block mb-4 overflow-hidden rounded-[12px] aspect-square bg-gray-50 relative group">
                 {/* Skeleton shimmer before load */}
                 <div className="absolute inset-0 bg-gradient-to-r from-brand-primary/5 via-brand-primary/10 to-brand-primary/5 animate-pulse -z-10" />
                 <img
@@ -96,40 +97,40 @@ const ProductCard = ({ product }) => {
             </Link>
 
             <div className="space-y-1 mb-4">
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{product.category?.name}</p>
-                <h3 className="font-bold text-gray-800 line-clamp-2 min-h-[3rem] md:group-hover:text-brand-primary transition-colors">
+                <p className="text-[10px] font-bold text-text-secondary uppercase tracking-[0.1em]">{product.category?.name}</p>
+                <h3 className="font-bold text-text-primary line-clamp-1 text-sm group-hover:text-brand-primary transition-colors">
                     {product.name}
                 </h3>
-                <p className="text-xs text-text-muted font-medium">{product.weight} {product.unit}</p>
+                <p className="text-xs text-text-secondary font-medium tracking-tight mb-2">{product.weight} {product.unit}</p>
             </div>
 
             <div className="flex items-center justify-between mt-auto">
                 <div className="flex flex-col">
-                    <span className="text-lg font-heading font-extrabold text-gray-800">₹{product.price}</span>
-                    <span className="text-sm text-gray-400 line-through">₹{product.mrp}</span>
+                    <span className="text-base font-bold text-text-primary">₹{product.price}</span>
+                    <span className="text-[10px] text-text-secondary line-through">₹{product.mrp}</span>
                 </div>
 
                 {quantity === 0 ? (
                     <button
                         onClick={handleAddToCart}
-                        className="w-24 py-2 border border-brand-primary text-brand-primary rounded-md text-xs font-bold uppercase transition-all md:hover:bg-brand-primary md:hover:text-white active:bg-brand-primary active:text-white tap-target"
+                        className="w-20 py-2 bg-white border border-brand-primary text-brand-primary rounded-lg text-xs font-bold uppercase transition-all hover:bg-brand-primary hover:text-white active:scale-95 shadow-sm"
                     >
                         Add
                     </button>
                 ) : (
-                    <div className="flex items-center bg-brand-primary rounded-md p-1 min-w-[6rem] justify-between shadow-lg shadow-brand-primary/20 tap-target">
+                    <div className="flex items-center bg-brand-primary rounded-lg p-1 min-w-[5.5rem] justify-between shadow-sm tap-target">
                         <button
                             onClick={handleRemoveFromCart}
-                            className="w-7 h-7 flex items-center justify-center text-white md:hover:bg-white/10 active:bg-white/20 rounded transition-colors tap-target"
+                            className="w-6 h-6 flex items-center justify-center text-white hover:bg-white/10 active:scale-90 rounded transition-colors"
                         >
-                            <Minus size={14} />
+                            <Minus size={12} />
                         </button>
-                        <span className="text-white font-bold text-sm mx-2">{quantity}</span>
+                        <span className="text-white font-bold text-xs mx-1">{quantity}</span>
                         <button
                             onClick={handleAddToCart}
-                            className="w-7 h-7 flex items-center justify-center text-white md:hover:bg-white/10 active:bg-white/20 rounded transition-colors tap-target"
+                            className="w-6 h-6 flex items-center justify-center text-white hover:bg-white/10 active:scale-90 rounded transition-colors"
                         >
-                            <Plus size={14} />
+                            <Plus size={12} />
                         </button>
                     </div>
                 )}

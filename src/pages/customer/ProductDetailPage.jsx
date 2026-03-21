@@ -201,24 +201,23 @@ const ProductDetailPage = () => {
                                             toast.success('Added to Basket');
                                         }}
                                         disabled={product.stock <= 0}
-                                        className="w-full py-5 rounded-2xl bg-gradient-to-r from-brand-primary to-brand-secondary text-white font-black uppercase tracking-widest text-sm flex items-center justify-center space-x-3 shadow-xl shadow-brand-primary/20 hover:shadow-2xl hover:scale-[1.02] active:scale-95 transition-all relative overflow-hidden group"
+                                        className="w-full py-5 rounded-2xl bg-brand-primary text-white font-black uppercase tracking-widest text-sm flex items-center justify-center space-x-3 shadow-xl shadow-brand-primary/20 hover:shadow-2xl hover:scale-[1.01] active:scale-95 transition-all relative overflow-hidden group"
                                     >
-                                        <div className="absolute inset-0 w-1/2 h-full bg-white/20 -skew-x-[30deg] -translate-x-full group-hover:translate-x-[250%] transition-transform duration-1000 ease-in-out" />
                                         <ShoppingBag size={20} />
                                         <span>Add to Basket</span>
                                     </button>
                                 ) : (
                                     <div className="flex items-center space-x-4">
-                                        <div className="flex-1 flex items-center bg-gray-900 rounded-2xl p-1.5 justify-between">
+                                        <div className="flex-1 flex items-center bg-text-primary rounded-2xl p-1.5 justify-between shadow-lg shadow-text-primary/10">
                                             <button onClick={() => dispatch(removeFromCart(product._id))} className="w-12 h-12 flex items-center justify-center text-white hover:bg-white/10 rounded-xl transition-colors">
                                                 <Minus size={20} strokeWidth={3} />
                                             </button>
-                                            <span className="text-white text-xl font-black">{quantity}</span>
+                                            <span className="text-white text-xl font-bold">{quantity}</span>
                                             <button onClick={() => dispatch(addToCart(product))} className="w-12 h-12 flex items-center justify-center text-white hover:bg-white/10 rounded-xl transition-colors">
                                                 <Plus size={20} strokeWidth={3} />
                                             </button>
                                         </div>
-                                        <Link to="/cart" className="px-8 h-14 bg-brand-primary/10 text-brand-primary font-black rounded-2xl flex items-center justify-center hover:bg-brand-primary/20 transition-all uppercase tracking-widest text-xs">
+                                        <Link to="/cart" className="px-8 h-14 bg-brand-bg-light text-brand-primary font-black rounded-2xl flex items-center justify-center hover:bg-brand-bg-light/80 transition-all uppercase tracking-widest text-[10px]">
                                             View Cart
                                         </Link>
                                     </div>
@@ -443,7 +442,7 @@ const ProductDetailPage = () => {
             </main>
 
             {/* Mobile Bottom Bar - Fixed - positioned above BottomNav */}
-            <div className="lg:hidden fixed bottom-[60px] md:bottom-0 left-0 w-full bg-white border-t border-gray-100 p-3 md:p-4 z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
+            <div className="lg:hidden fixed bottom-[64px] md:bottom-0 left-0 w-full bg-white border-t border-gray-100 p-3 md:p-4 z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
                 {quantity === 0 ? (
                     <button
                         onClick={() => {
@@ -451,14 +450,14 @@ const ProductDetailPage = () => {
                             toast.success('Added to Basket');
                         }}
                         disabled={product.stock <= 0}
-                        className="w-full py-4 md:py-5 rounded-xl md:rounded-2xl bg-gradient-to-r from-brand-primary to-brand-secondary text-white font-black uppercase tracking-widest text-sm flex items-center justify-center space-x-3 shadow-lg hover:shadow-xl transition-all tap-target"
+                        className="w-full py-4 md:py-5 rounded-2xl bg-brand-primary text-white font-black uppercase tracking-widest text-sm flex items-center justify-center space-x-3 shadow-lg hover:shadow-xl transition-all tap-target"
                     >
                         <ShoppingBag size={20} />
                         <span>Add to Basket • ₹{product.price}</span>
                     </button>
                 ) : (
                     <div className="flex items-center space-x-4">
-                        <div className="flex-1 flex items-center bg-gray-900 rounded-xl md:rounded-2xl p-1.5 justify-between">
+                        <div className="flex-1 flex items-center bg-text-primary rounded-xl md:rounded-2xl p-1.5 justify-between">
                             <button onClick={() => dispatch(removeFromCart(product._id))} className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-white rounded-xl tap-target active:bg-white/20 transition-colors">
                                 <Minus size={20} strokeWidth={3} />
                             </button>
@@ -467,7 +466,7 @@ const ProductDetailPage = () => {
                                 <Plus size={20} strokeWidth={3} />
                             </button>
                         </div>
-                        <Link to="/cart" className="px-6 h-12 md:h-14 md:px-8 bg-brand-primary text-white font-black rounded-xl md:rounded-2xl flex items-center justify-center uppercase tracking-widest text-xs shadow-lg shadow-brand-primary/20 tap-target">
+                        <Link to="/cart" className="px-6 h-12 md:h-14 md:px-8 bg-brand-bg-light text-brand-primary font-black rounded-xl md:rounded-2xl flex items-center justify-center uppercase tracking-widest text-[10px] shadow-sm tap-target">
                             Check Bag
                         </Link>
                     </div>

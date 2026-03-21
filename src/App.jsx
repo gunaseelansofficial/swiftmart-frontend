@@ -66,7 +66,7 @@ const BackToTop = () => {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.5 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 p-4 bg-brand-primary text-white rounded-full shadow-2xl hover:bg-brand-secondary transition-all"
+          className="fixed bottom-24 right-4 md:bottom-8 md:right-8 z-50 p-4 bg-white text-brand-primary rounded-full shadow-2xl border border-gray-100 hover:scale-110 active:scale-95 transition-all"
         >
           <ChevronUp size={24} />
         </motion.button>
@@ -76,6 +76,7 @@ const BackToTop = () => {
 };
 
 import BottomNav from './components/shared/BottomNav';
+import StickyCartBar from './components/shared/StickyCartBar';
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -260,6 +261,7 @@ function App() {
           </Routes>
         </AnimatePresence>
       </Suspense>
+      {isCustomerRoute && <StickyCartBar />}
       {isCustomerRoute && <BottomNav />}
     </div>
   );

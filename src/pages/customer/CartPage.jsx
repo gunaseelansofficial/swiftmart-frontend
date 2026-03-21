@@ -62,34 +62,34 @@ const CartPage = () => {
 
     if (items.length === 0) {
         return (
-            <div className="min-h-screen bg-light-bg">
+            <div className="min-h-screen bg-main-bg">
                 <Navbar />
                 <div className="max-w-7xl mx-auto px-4 py-20 text-center">
-                    <div className="w-64 h-64 bg-brand-primary/5 rounded-full flex items-center justify-center mx-auto mb-8">
+                    <div className="w-64 h-64 bg-brand-bg-light rounded-full flex items-center justify-center mx-auto mb-8">
                         <ShoppingBag size={80} className="text-brand-primary opacity-20" />
                     </div>
-                    <h2 className="text-3xl font-heading font-extrabold text-gray-800 mb-4">Your cart is empty</h2>
-                    <p className="text-text-muted mb-8 max-w-md mx-auto">
+                    <h2 className="text-3xl font-bold text-text-primary mb-4 tracking-tight">Your cart is empty</h2>
+                    <p className="text-text-secondary mb-8 max-w-md mx-auto">
                         Looks like you haven't added anything to your cart yet. Explore our fresh categories and start shopping!
                     </p>
-                    <Link to="/" className="btn-primary px-10">Start Shopping</Link>
+                    <Link to="/" className="btn-primary px-10 rounded-xl">Start Shopping</Link>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-light-bg">
+        <div className="min-h-screen bg-main-bg">
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <div className="flex items-center space-x-2 text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
-                    <Link to="/" className="hover:text-brand-primary">Home</Link>
-                    <ChevronLeft size={12} />
-                    <span className="text-gray-600">Shopping Cart</span>
+                <div className="flex items-center space-x-2 text-[10px] font-bold text-text-secondary uppercase tracking-[0.15em] mb-4">
+                    <Link to="/" className="hover:text-brand-primary transition-colors">Home</Link>
+                    <ChevronRight size={10} strokeWidth={3} />
+                    <span className="text-text-primary">Shopping Cart</span>
                 </div>
 
-                <h1 className="text-3xl font-heading font-extrabold text-gray-800 mb-10">Your Basket ({items.length} items)</h1>
+                <h1 className="text-3xl font-bold text-text-primary mb-10 tracking-tight">Your Basket ({items.length} items)</h1>
 
                 <div className="flex flex-col lg:flex-row gap-6 md:gap-12">
                     {/* Cart Items */}
@@ -237,24 +237,24 @@ const CartPage = () => {
             </main>
 
             {/* Mobile Fixed Bill Summary & Checkout */}
-            <div className="md:hidden fixed bottom-[60px] left-0 w-full bg-white border-t border-gray-100 p-4 z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.05)] rounded-t-3xl space-y-4">
+            <div className="md:hidden fixed bottom-[64px] left-0 w-full bg-white border-t border-gray-100 p-4 z-40 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] rounded-t-[32px] space-y-4">
                 {/* Collapsible details for mobile could be added here, kept simple for now */}
-                <div className="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-100">
+                <div className="flex justify-between items-center bg-brand-bg-light p-4 rounded-2xl border border-brand-primary/5">
                     <div className="flex flex-col">
-                        <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">To Pay</span>
-                        <span className="text-lg font-heading font-extrabold text-brand-primary leading-none">₹{finalTotal}</span>
+                        <span className="text-[10px] font-black text-brand-primary/60 uppercase tracking-widest">To Pay</span>
+                        <span className="text-xl font-bold text-text-primary leading-none">₹{finalTotal}</span>
                     </div>
                     <div className="text-right flex flex-col items-end">
-                         <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest bg-gray-200/50 px-2 py-0.5 rounded-md mb-0.5 mt-0.5">Includes {gst} GST & {deliveryFee===0?'Free':`${deliveryFee}`} Del</span>
-                         {discount > 0 && <span className="text-[9px] font-bold text-green-600 uppercase tracking-widest leading-none mt-1">Saved ₹{discount}</span>}
+                         <span className="text-[9px] font-bold text-text-secondary uppercase tracking-widest px-2 py-0.5 bg-white rounded-md mb-0.5">Includes {gst} GST & {deliveryFee===0?'Free':`₹${deliveryFee}`} Del</span>
+                         {discount > 0 && <span className="text-[9px] font-black text-green-600 uppercase tracking-widest mt-1">Saved ₹{discount}</span>}
                     </div>
                 </div>
 
                 <button
                     onClick={handleCheckout}
-                    className="w-full btn-primary flex items-center justify-between !py-4 px-6 rounded-2xl shadow-xl shadow-brand-primary/20 tap-target"
+                    className="w-full bg-brand-primary text-white font-black py-4.5 px-6 rounded-2xl shadow-xl shadow-brand-primary/20 flex items-center justify-between tap-target active:scale-[0.98] transition-all"
                 >
-                    <span className="text-sm">Proceed to Checkout</span>
+                    <span className="text-sm uppercase tracking-widest">Proceed to Checkout</span>
                     <ArrowRight size={18} />
                 </button>
             </div>

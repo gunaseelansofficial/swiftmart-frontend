@@ -103,39 +103,39 @@ const ProductListingPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-light-bg">
+        <div className="min-h-screen bg-main-bg">
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Breadcrumbs & Title */}
                 <div className="mb-8">
-                    <div className="flex items-center space-x-2 text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
-                        <Link to="/" className="hover:text-brand-primary">Home</Link>
-                        <span>/</span>
-                        <span className="text-gray-600">{currentCategory?.name || 'Search Results'}</span>
+                    <div className="flex items-center space-x-2 text-[10px] font-bold text-text-secondary uppercase tracking-[0.15em] mb-3">
+                        <Link to="/" className="hover:text-brand-primary transition-colors">Home</Link>
+                        <ChevronRight size={10} strokeWidth={3} />
+                        <span className="text-text-primary capitalize">{currentCategory?.name || 'Search Results'}</span>
                     </div>
                     <div className="flex justify-between items-end">
                         <div>
-                            <h1 className="text-3xl font-heading font-extrabold text-gray-800">
+                            <h1 className="text-3xl font-bold text-text-primary tracking-tight">
                                 {currentCategory?.name || `Results for "${searchParams.get('q') || ''}"`}
                             </h1>
-                            <p className="text-text-muted">{totalProducts} products found</p>
+                            <p className="text-sm text-text-secondary mt-1">{totalProducts} products found</p>
                         </div>
 
                         {/* Desktop Sort */}
                         <div className="hidden md:flex items-center space-x-3">
-                            <span className="text-sm font-bold text-gray-400 uppercase tracking-wider">Sort by:</span>
+                            <span className="text-xs font-bold text-text-secondary uppercase tracking-wider">Sort by:</span>
                             <div className="relative group">
-                                <button className="bg-white border border-gray-100 rounded-md px-4 py-2 flex items-center space-x-2 text-sm font-bold text-gray-700 hover:border-brand-primary transition-all">
+                                <button className="bg-white border border-gray-100 rounded-xl px-4 py-2.5 flex items-center space-x-2 text-sm font-bold text-text-primary hover:border-brand-primary transition-all shadow-sm">
                                     <span>{sortBy === 'relevance' ? 'Relevance' : sortBy.replace('_', ' ')}</span>
-                                    <ChevronDown size={16} />
+                                    <ChevronDown size={14} />
                                 </button>
-                                <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-30 overflow-hidden">
+                                <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-30 overflow-hidden">
                                     {['relevance', 'price_asc', 'price_desc', 'rating', 'newest'].map((opt) => (
                                         <button
                                             key={opt}
                                             onClick={() => setSortBy(opt)}
-                                            className="w-full text-left px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-brand-primary transition-colors"
+                                            className="w-full text-left px-4 py-3.5 text-sm font-bold text-text-secondary hover:bg-brand-bg-light hover:text-brand-primary transition-colors"
                                         >
                                             {opt === 'relevance' ? 'Relevance' : opt.replace('_', ' ').charAt(0).toUpperCase() + opt.replace('_', ' ').slice(1)}
                                         </button>
@@ -236,7 +236,7 @@ const ProductListingPage = () => {
                                 setSelectedRating(null);
                                 setInStockOnly(false);
                             }}
-                            className="w-full py-3 text-xs font-bold text-brand-primary border border-brand-primary rounded-md hover:bg-brand-primary hover:text-white transition-all uppercase tracking-widest tap-target"
+                            className="w-full py-3.5 text-[10px] font-black text-brand-primary border border-brand-primary/20 bg-brand-primary/5 rounded-xl hover:bg-brand-primary hover:text-white transition-all uppercase tracking-[0.1em] tap-target"
                         >
                             Reset Filters
                         </button>

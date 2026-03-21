@@ -98,16 +98,16 @@ const Home = () => {
     };
 
     const ProductStrip = ({ title, products, loading, link }) => (
-        <section className="mb-16">
-            <div className="flex justify-between items-center mb-8">
+        <section className="mb-12 md:mb-16">
+            <div className="flex justify-between items-end mb-6">
                 <div>
-                    <h3 className="text-2xl font-heading font-extrabold text-[#1A1A2E] flex items-center">
+                    <h3 className="text-xl md:text-2xl font-bold text-text-primary tracking-tight">
                         {title}
                     </h3>
                 </div>
-                <Link to={link || "/category/all"} className="flex items-center space-x-2 text-xs font-bold text-brand-primary uppercase tracking-widest hover:underline group">
+                <Link to={link || "/category/all"} className="flex items-center space-x-1.5 text-xs font-bold text-brand-primary uppercase tracking-wider hover:text-brand-primary/80 transition-colors group">
                     <span>View All</span>
-                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
                 </Link>
             </div>
             <div className="flex overflow-x-auto pb-6 space-x-4 md:space-x-6 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 mobile-touch-scroll no-scrollbar">
@@ -168,11 +168,11 @@ const Home = () => {
                 </div>
 
                 {/* Categories Section - Now FIRST as requested */}
-                <section className="mb-8 md:mb-12 relative group/slider">
-                    <div className="flex justify-between items-end mb-4 md:mb-8">
+                <section className="mb-10 md:mb-16 relative group/slider">
+                    <div className="flex justify-between items-end mb-6 md:mb-8">
                         <div>
-                            <h3 className="text-xl md:text-2xl font-heading font-extrabold text-[#1A1A2E]">Shop by Category</h3>
-                            <p className="text-xs md:text-sm text-text-muted hidden md:block">Explore our wide range of freshness</p>
+                            <h3 className="text-xl md:text-2xl font-bold text-text-primary tracking-tight">Shop by Category</h3>
+                            <p className="text-xs md:text-sm text-text-secondary hidden md:block mt-1">Explore our wide range of products</p>
                         </div>
                         {/* Desktop Navigation Buttons */}
                         <div className="hidden md:flex space-x-2">
@@ -208,13 +208,13 @@ const Home = () => {
                                     className="block min-w-[80px] md:min-w-[140px] snap-center md:snap-start"
                                 >
                                     <motion.div
-                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        initial={{ opacity: 0, scale: 0.95 }}
                                         animate={{ opacity: 1, scale: 1 }}
-                                        transition={{ delay: idx * 0.05 }}
-                                        whileHover={{ y: -5, scale: 1.05 }}
+                                        transition={{ delay: idx * 0.03 }}
+                                        whileHover={{ y: -4 }}
                                         className="flex flex-col items-center justify-center text-center group/cat"
                                     >
-                                        <div className="w-16 h-16 md:w-28 md:h-28 rounded-full md:rounded-3xl overflow-hidden bg-white mb-3 shadow-md md:shadow-card group-hover/cat:shadow-xl transition-all border-2 border-transparent group-hover/cat:border-brand-primary/20 p-2 md:p-3">
+                                        <div className="w-16 h-16 md:w-24 md:h-24 rounded-2xl overflow-hidden bg-white mb-3 shadow-sm border border-card-border group-hover/cat:bg-brand-bg-light group-hover/cat:border-brand-primary/30 transition-all p-3">
                                             <img
                                                 src={getImageUrl(cat.image)}
                                                 className="w-full h-full object-contain transition-transform duration-500 group-hover/cat:scale-110"
@@ -222,7 +222,7 @@ const Home = () => {
                                                 onError={(e) => e.target.src = '/placeholder-product.png'}
                                             />
                                         </div>
-                                        <span className="text-[10px] md:text-sm font-bold text-gray-700 uppercase tracking-tight line-clamp-1">{cat.name}</span>
+                                        <span className="text-[10px] md:text-xs font-bold text-text-primary uppercase tracking-wide line-clamp-1">{cat.name}</span>
                                     </motion.div>
                                 </Link>
                             ))
@@ -308,10 +308,10 @@ const Home = () => {
                 />
 
                 {/* Promo Section */}
-                <section className="bg-navy-dark rounded-2xl md:rounded-3xl p-8 md:p-16 text-center border-2 md:border-4 border-brand-primary/20 shadow-xl relative overflow-hidden group mb-4">
-                    <div className="absolute inset-0 bg-brand-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                    <h3 className="text-2xl md:text-5xl font-heading font-extrabold text-white mb-4 md:mb-6 uppercase tracking-tighter italic">Handpicked Freshness!</h3>
-                    <p className="text-sm md:text-xl text-gray-300 max-w-2xl mx-auto mb-8 md:mb-12">
+                <section className="bg-brand-primary rounded-3xl p-8 md:p-16 text-center shadow-xl relative overflow-hidden group mb-8">
+                    <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    <h3 className="text-2xl md:text-4xl font-bold text-white mb-4 tracking-tight">Handpicked Freshness!</h3>
+                    <p className="text-sm md:text-lg text-white/80 max-w-2xl mx-auto mb-8 md:mb-12">
                         From hand-picked organic fruits to artisanal dairy, we bring the best of the market straight to your kitchen.
                     </p>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:flex md:flex-wrap md:justify-center md:gap-6">

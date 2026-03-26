@@ -207,16 +207,15 @@ const LocationContent = ({ searchQuery, handleSearch, loading, results, handleSe
                             className="flex items-center justify-between p-4 bg-brand-primary/5 hover:bg-brand-primary/10 border border-brand-primary/10 rounded-2xl transition-all group"
                         >
                             <div className="flex items-center space-x-3">
-                                <MapIcon className="text-brand-primary" size={20} />
+                                <Navigation className="text-brand-primary" size={20} />
                                 <div className="text-left">
-                                    <p className="text-sm font-black text-brand-primary uppercase italic">Pick on Map</p>
-                                    <p className="text-[10px] text-brand-primary/60 font-bold uppercase">More Precise</p>
+                                    <p className="text-sm font-black text-brand-primary uppercase italic">Confirm Precise Location</p>
+                                    <p className="text-[10px] text-brand-primary/60 font-bold uppercase">Detect via GPS</p>
                                 </div>
                             </div>
                             <ChevronRight size={18} className="text-brand-primary/40 group-hover:translate-x-1 transition-transform" />
                         </button>
                     </div>
-
                     {/* Recent Locations */}
                     {recentLocations.length > 0 && (
                         <div className="space-y-3">

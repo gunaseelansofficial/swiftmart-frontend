@@ -19,7 +19,7 @@ const DeliveryPartnerManagement = () => {
     const [showModal, setShowModal] = useState(false);
     const [newPartner, setNewPartner] = useState({
         name: '', email: '', phone: '', password: 'Partner@' + Math.floor(Math.random() * 1000),
-        vehicleType: 'Bike', vehicleNumber: '', licenseNumber: '',
+        vehicleType: 'Bike', vehicleNumber: '', licenseNumber: '', maxActiveOrders: 1,
         bankDetails: { accountNo: '', ifsc: '', holderName: '' }
     });
 
@@ -454,6 +454,17 @@ const DeliveryPartnerManagement = () => {
                                                 className="w-full bg-gray-50 border-none rounded-md p-3 focus:ring-2 focus:ring-brand-primary font-bold text-sm"
                                                 value={newPartner.licenseNumber}
                                                 onChange={(e) => setNewPartner({ ...newPartner, licenseNumber: e.target.value })}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-3 gap-6 mt-4">
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Max Active Orders</label>
+                                            <input
+                                                type="number" required min="1" max="10"
+                                                className="w-full bg-gray-50 border-none rounded-md p-3 focus:ring-2 focus:ring-brand-primary font-bold text-sm"
+                                                value={newPartner.maxActiveOrders}
+                                                onChange={(e) => setNewPartner({ ...newPartner, maxActiveOrders: Number(e.target.value) })}
                                             />
                                         </div>
                                     </div>

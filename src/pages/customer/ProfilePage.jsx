@@ -1,19 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     User,
     MapPin,
     Package,
-    Wallet as WalletIcon,
-    Camera,
     Plus,
     Trash2,
-    CheckCircle,
     ChevronRight,
-    Search,
-    Clock,
-    CreditCard
+    ChevronLeft,
 } from 'lucide-react';
 import Navbar from '../../components/shared/Navbar';
 import api from '../../utils/api';
@@ -34,6 +30,7 @@ L.Icon.Default.mergeOptions({
 
 const ProfilePage = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { user: authUser } = useSelector(state => state.auth);
     const [activeTab, setActiveTab] = useState('personal');
     const [loading, setLoading] = useState(true);
@@ -156,7 +153,6 @@ const ProfilePage = () => {
         { id: 'personal', label: 'Personal Info', icon: <User size={18} /> },
         { id: 'addresses', label: 'Addresses', icon: <MapPin size={18} /> },
         { id: 'orders', label: 'Orders', icon: <Package size={18} /> },
-        { id: 'wallet', label: 'Wallet', icon: <WalletIcon size={18} /> },
     ];
 
     if (loading) return <LoadingSpinner fullPage />;
@@ -165,6 +161,15 @@ const ProfilePage = () => {
         <div className="min-h-screen bg-light-bg pb-20 md:pb-0">
             <Navbar />
             <main className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8 py-4 md:py-12">
+                {/* Mobile Back Button */}
+                <div className="lg:hidden px-4 mb-4">
+                    <button 
+                        onClick={() => navigate(-1)} 
+                        className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-800 shadow-sm"
+                    >
+                        <ChevronLeft size={20} />
+                    </button>
+                </div>
                 <div className="flex flex-col md:flex-row gap-6 md:gap-8">
                     {/* Sidebar Tabs */}
                     <aside className="w-full md:w-64 space-y-2 px-4 md:px-0">
@@ -378,7 +383,7 @@ const ProfilePage = () => {
                                     <div className="space-y-3 md:space-y-4 pb-6">
                                         {orders.length > 0 ? (
                                             orders.slice(0, 5).map((order) => (
-                                                <div key={order._id} className="bg-white p-4 md:p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between hover:shadow-md transition-all cursor-pointer group tap-target" onClick={() => (window.location.href = `/track/${order._id}`)}>
+                                                <div key={order._id} className="bg-white p-4 md:p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between hover:shadow-md transition-all cursor-pointer group tap-target" onClick={() => navigate(`/track/${order._id}`)}>
                                                     <div className="flex items-center space-x-4 md:space-x-6">
                                                         <div className="w-14 h-14 md:w-16 md:h-16 bg-gray-50 rounded-xl overflow-hidden flex-shrink-0 border border-gray-100">
                                                             <img
@@ -418,67 +423,7 @@ const ProfilePage = () => {
                                 </motion.div>
                             )}
 
-                            {activeTab === 'wallet' && (
-                                <motion.div
-                                    key="wallet"
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    className="space-y-6 md:space-y-8 px-4 md:px-0"
-                                >
-                                    <div className="bg-navy-dark rounded-3xl p-6 md:p-10 text-white relative overflow-hidden shadow-2xl">
-                                        <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/10 rounded-full -mr-32 -mt-32 blur-3xl pointer-events-none" />
-                                        <div className="relative z-10">
-                                            <div className="flex justify-between items-start mb-8 md:mb-12">
-                                                <div>
-                                                    <p className="text-xs font-bold text-brand-primary uppercase tracking-[0.2em] mb-2">SwiftWallet Balance</p>
-                                                    <h2 className="text-5xl font-heading font-extrabold flex items-center">
-                                                        <span className="text-2xl mr-2 text-brand-primary">₹</span>
-                                                        {user?.walletBalance || 0}
-                                                    </h2>
-                                                </div>
-                                                <div className="p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10">
-                                                    <WalletIcon size={32} className="text-brand-primary" />
-                                                </div>
-                                            </div>
-                                            <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                                                <button className="flex-1 bg-brand-primary text-white rounded-xl py-3 md:py-4 font-bold text-sm uppercase tracking-widest hover:bg-brand-secondary transition-all shadow-lg shadow-brand-primary/20 flex items-center justify-center space-x-2 tap-target">
-                                                    <Plus size={18} />
-                                                    <span>Add Money</span>
-                                                </button>
-                                                <button className="flex-1 bg-white/10 backdrop-blur-md text-white rounded-xl py-3 md:py-4 font-bold text-sm uppercase tracking-widest hover:bg-white/20 transition-all border border-white/10 flex items-center justify-center space-x-2 tap-target">
-                                                    <CreditCard size={18} />
-                                                    <span>Pay Bills</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div className="space-y-4 md:space-y-6 pb-6">
-                                        <h3 className="text-xl font-heading font-extrabold text-[#1A1A2E] uppercase italic tracking-tighter">Transaction History</h3>
-                                        <div className="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 mx-[-16px] md:mx-0 rounded-none md:rounded-3xl border-x-0 md:border-x">
-                                            <div className="divide-y divide-gray-50">
-                                                {/* Mock Transactions */}
-                                                {[1, 2, 3].map((_, i) => (
-                                                    <div key={i} className="px-4 md:px-8 py-4 md:py-6 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                                                        <div className="flex items-center space-x-4">
-                                                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${i === 1 ? 'bg-red-50 text-red-500' : 'bg-green-50 text-green-500'}`}>
-                                                                {i === 1 ? <ChevronRight size={20} className="rotate-45" /> : <ChevronRight size={20} className="-rotate-[135deg]" />}
-                                                            </div>
-                                                            <div>
-                                                                <p className="font-bold text-gray-800">{i === 1 ? 'Order Paid' : 'Refund Received'}</p>
-                                                                <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">Oct 24, 2023</p>
-                                                            </div>
-                                                        </div>
-                                                        <div className={`text-right font-heading font-extrabold ${i === 1 ? 'text-red-500' : 'text-green-500'}`}>
-                                                            {i === 1 ? '-₹150' : '+₹45'}
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            )}
                         </AnimatePresence>
                     </div>
                 </div>

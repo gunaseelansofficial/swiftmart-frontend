@@ -386,13 +386,13 @@ const DeliveryDashboard = () => {
 
                             <div className="flex space-x-4">
                                 <button
-                                    onClick={handleDecline}
+                                    onClick={handleDeclineOrder}
                                     className="flex-1 py-5 rounded-2xl bg-gray-800 text-gray-400 font-black uppercase tracking-widest text-xs hover:bg-gray-700 transition-colors"
                                 >
                                     Decline
                                 </button>
                                 <button
-                                    onClick={handleAccept}
+                                    onClick={handleAcceptOrder}
                                     className="flex-[2] py-5 rounded-2xl bg-brand-primary text-white font-black uppercase tracking-widest text-xs shadow-2xl shadow-brand-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
                                 >
                                     Accept Order

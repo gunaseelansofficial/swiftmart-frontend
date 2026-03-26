@@ -45,10 +45,7 @@ const partnerIcon = new L.Icon({
 
 const ActiveOrderPage = () => {
     const { user } = useSelector(state => state.auth);
-    const [orders, setOrders] = useState([]);
-    const [selectedOrderIndex, setSelectedOrderIndex] = useState(0);
-    const ordersRef = useRef([]); 
-    const order = orders[selectedOrderIndex] || null;
+    const [order, setOrder] = useState(null);
     const [loading, setLoading] = useState(true);
     const [myPosition, setMyPosition] = useState(null);
     const [showOtpModal, setShowOtpModal] = useState(false);
@@ -83,13 +80,10 @@ const ActiveOrderPage = () => {
     }, [socket]);
 
     useEffect(() => {
-        ordersRef.current = orders;
-        // Stop tracking if no order needs it
-        const needsTracking = orders.some(o => o.status === 'picked_up' || o.status === 'on_the_way');
-        if (!needsTracking) {
+        if (order?.status === 'delivered') {
             stopTracking();
         }
-    }, [orders]);
+    }, [order?.status]);
 
     const stopTracking = () => {
         if (watchIdRef.current !== null) {
@@ -113,12 +107,12 @@ const ActiveOrderPage = () => {
         });
 
         socket.on('order:status_changed', ({ orderId, status }) => {
-            setOrders(prev => prev.map(o => {
-                if (o._id === orderId) {
-                    return { ...o, status };
+            setOrder(prev => {
+                if (prev && prev._id === orderId) {
+                    return { ...prev, status };
                 }
-                return o;
-            }));
+                return prev;
+            });
         });
     };
 
@@ -126,10 +120,10 @@ const ActiveOrderPage = () => {
         try {
             setLoading(true);
             const { data } = await api.get('/delivery/active-order');
-            const activeOrders = data.orders || (data.order ? [data.order] : []);
-            setOrders(activeOrders);
-            if (activeOrders.some(o => o.status === 'picked_up' || o.status === 'on_the_way')) {
-                startTracking();
+            const activeOrder = data.order;
+            setOrder(activeOrder);
+            if (activeOrder?.status === 'picked_up' || activeOrder?.status === 'on_the_way') {
+                startTracking(activeOrder._id);
             }
         } catch (error) {
             toast.error('Failed to fetch active order');
@@ -157,15 +151,11 @@ const ActiveOrderPage = () => {
                 // Throttling: moved > 10m AND > 5s
                 if (distanceMoved > 10 && (now - lastEmitTime.current) > 5000) {
                     if (socket) {
-                        ordersRef.current.forEach(o => {
-                            if (o.status === 'picked_up' || o.status === 'on_the_way') {
-                                socket.emit('partner:location', {
-                                    orderId: o._id,
-                                    lat: latitude,
-                                    lng: longitude,
-                                    accuracy: newAccuracy
-                                });
-                            }
+                        socket.emit('partner:location', {
+                            orderId: order._id,
+                            lat: latitude,
+                            lng: longitude,
+                            accuracy: newAccuracy
                         });
                     }
                     lastEmittedPosition.current = { lat: latitude, lng: longitude };
@@ -183,11 +173,11 @@ const ActiveOrderPage = () => {
     const handleUpdateStatus = async (newStatus) => {
         try {
             await api.patch(`/orders/${order._id}/status`, { status: newStatus });
-            setOrders(prev => prev.map(o => o._id === order._id ? { ...o, status: newStatus } : o));
+            setOrder(prev => ({ ...prev, status: newStatus }));
 
             if (newStatus === 'picked_up') {
                 toast.success('Order Picked Up! Head to delivery location.');
-                startTracking();
+                startTracking(order._id);
             }
         } catch (error) {
             toast.error(error.response?.data?.message || 'Update failed');
@@ -218,9 +208,9 @@ const ActiveOrderPage = () => {
         try {
             await api.post('/delivery/verify-pickup-otp', { orderId: order._id, otp: otpValue });
             toast.success('🛒 Order Picked Up! Head to the delivery location.');
-            setOrders(prev => prev.map(o => o._id === order._id ? { ...o, status: 'picked_up' } : o));
+            setOrder(prev => ({ ...prev, status: 'picked_up' }));
             setPickupOtp(['', '', '', '']);
-            startTracking();
+            startTracking(order._id);
         } catch (error) {
             toast.error(error.response?.data?.message || 'OTP verification failed');
         } finally {
@@ -250,15 +240,7 @@ const ActiveOrderPage = () => {
             setIsSuccess(true);
             toast.success('Order Delivered Successfully!');
             setTimeout(() => {
-                if (orders.length > 1) {
-                    setIsSuccess(false);
-                    setOtp(['', '', '', '']);
-                    setShowOtpModal(false);
-                    fetchActiveOrder();
-                    setSelectedOrderIndex(0);
-                } else {
-                    navigate('/delivery/dashboard');
-                }
+                navigate('/delivery/dashboard');
             }, 3000);
         } catch (error) {
             toast.error(error.response?.data?.message || 'Invalid OTP');
@@ -338,25 +320,6 @@ const ActiveOrderPage = () => {
                 animate={{ y: 0 }}
                 className="bg-[#1B263B] rounded-t-[40px] shadow-[0_-20px_50px_rgba(0,0,0,0.5)] border-t border-gray-700 p-8 z-20"
             >
-                {/* Active Orders Selector (only visible if > 1 order) */}
-                {orders.length > 1 && (
-                    <div className="flex overflow-x-auto gap-3 pb-4 mb-4 hide-scrollbar">
-                        {orders.map((o, idx) => (
-                            <button
-                                key={o._id}
-                                onClick={() => setSelectedOrderIndex(idx)}
-                                className={`flex-shrink-0 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-colors ${
-                                    selectedOrderIndex === idx
-                                        ? 'bg-brand-primary text-white border-brand-primary shadow-lg shadow-brand-primary/20'
-                                        : 'bg-[#0D1B2A] text-gray-400 border-gray-700 hover:text-white'
-                                }`}
-                            >
-                                Order #{o.orderId.slice(-6)}
-                            </button>
-                        ))}
-                    </div>
-                )}
-
                 {/* Customer Card */}
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center space-x-4">

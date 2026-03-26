@@ -1,7 +1,7 @@
 import AdminLayout from '../../components/admin/AdminLayout';
 import { useState, useEffect } from 'react';
 import api from '../../utils/api';
-import { Plus, Search, Filter, Edit, Trash2, MoreVertical, Package, AlertCircle, X, Zap, ShieldCheck, Star } from 'lucide-react';
+import { Plus, Search, Filter, Edit, Trash2, MoreVertical, Package, AlertCircle, X, Zap, ShieldCheck } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getImageUrl } from '../../utils/imageHelper';
@@ -32,8 +32,7 @@ const AdminProducts = () => {
         countryOfOrigin: '',
         shelfLife: '',
         sellerName: '',
-        sellerAddress: '',
-        isHomePage: false
+        sellerAddress: ''
     });
 
     useEffect(() => {
@@ -120,8 +119,7 @@ const AdminProducts = () => {
             countryOfOrigin: product.countryOfOrigin || '',
             shelfLife: product.shelfLife || '',
             sellerName: product.sellerName || '',
-            sellerAddress: product.sellerAddress || '',
-            isHomePage: product.isHomePage || false
+            sellerAddress: product.sellerAddress || ''
         });
         
         const existingPreviews = (product.images || []).map(img => getImageUrl(img));
@@ -204,7 +202,7 @@ const AdminProducts = () => {
             setFormData({
                 name: '', description: '', category: '', price: '', mrp: '', stock: '', weight: '', unit: 'kg',
                 highlights: [], information: [], offers: [], easyRefunds: false, fastDelivery: true,
-                netQuantity: '', countryOfOrigin: '', shelfLife: '', sellerName: '', sellerAddress: '', isHomePage: false
+                netQuantity: '', countryOfOrigin: '', shelfLife: '', sellerName: '', sellerAddress: ''
             });
         } catch (error) {
             toast.error(error.response?.data?.message || 'Failed to save product');
@@ -224,7 +222,7 @@ const AdminProducts = () => {
                         setFormData({
                             name: '', description: '', category: '', price: '', mrp: '', stock: '', weight: '', unit: 'kg',
                             highlights: [], information: [], offers: [], easyRefunds: false, fastDelivery: true,
-                            netQuantity: '', countryOfOrigin: '', shelfLife: '', sellerName: '', sellerAddress: '', isHomePage: false
+                            netQuantity: '', countryOfOrigin: '', shelfLife: '', sellerName: '', sellerAddress: ''
                         });
                         setShowAddModal(true);
                         setPreviews([]);
@@ -458,7 +456,7 @@ const AdminProducts = () => {
                                     </select>
                                 </div>
 
-                                <div className="col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4 bg-gray-50 p-4 rounded-xl border border-gray-100 mb-2">
+                                <div className="col-span-2 grid grid-cols-2 gap-4 bg-gray-50 p-4 rounded-xl border border-gray-100 mb-2">
                                     <div className="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm border border-gray-100">
                                         <div className="flex items-center space-x-3">
                                             <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-500">
@@ -487,21 +485,6 @@ const AdminProducts = () => {
                                             className={`w-12 h-6 rounded-full transition-all relative ${formData.fastDelivery ? 'bg-brand-primary' : 'bg-gray-200'}`}
                                         >
                                             <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${formData.fastDelivery ? 'left-7' : 'left-1'}`} />
-                                        </button>
-                                    </div>
-                                    <div className="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm border border-gray-100">
-                                        <div className="flex items-center space-x-3">
-                                            <div className="w-8 h-8 rounded-full bg-yellow-50 flex items-center justify-center text-yellow-500">
-                                                <Star size={18} fill={formData.isHomePage ? 'currentColor' : 'none'} />
-                                            </div>
-                                            <span className="text-sm font-bold text-gray-700">Home Page</span>
-                                        </div>
-                                        <button
-                                            type="button"
-                                            onClick={() => setFormData({ ...formData, isHomePage: !formData.isHomePage })}
-                                            className={`w-12 h-6 rounded-full transition-all relative ${formData.isHomePage ? 'bg-brand-primary' : 'bg-gray-200'}`}
-                                        >
-                                            <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${formData.isHomePage ? 'left-7' : 'left-1'}`} />
                                         </button>
                                     </div>
                                 </div>

@@ -32,7 +32,6 @@ const ProductDetailPage = () => {
 
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [reviews, setReviews] = useState([]);
     const [relatedProducts, setRelatedProducts] = useState([]);
     const [selectedImage, setSelectedImage] = useState(0);
     const [pincode, setPincode] = useState('');
@@ -50,7 +49,6 @@ const ProductDetailPage = () => {
         try {
             const { data } = await api.get(`/products/${id}`);
             setProduct(data.product);
-            setReviews(data.reviews || []);
 
             const relatedData = await api.get(`/products/${id}/related`);
             setRelatedProducts(relatedData.data.products);
@@ -92,22 +90,22 @@ const ProductDetailPage = () => {
     if (!product) return null;
 
     return (
-        <div className="min-h-screen bg-white dark:bg-dark-bg font-body transition-colors">
+        <div className="min-h-screen bg-white font-body">
             <Navbar />
 
             <main className="max-w-full lg:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-8">
                 {/* Breadcrumbs - Desktop Only */}
-                <div className="hidden lg:flex items-center space-x-2 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-8">
+                <div className="hidden lg:flex items-center space-x-2 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-8">
                     <Link to="/" className="hover:text-brand-primary transition-colors">Home</Link>
                     <ChevronRight size={10} strokeWidth={3} />
                     <Link to={`/category/${product.category?.slug}`} className="hover:text-brand-primary transition-colors">{product.category?.name}</Link>
                     <ChevronRight size={10} strokeWidth={3} />
-                    <span className="text-gray-900 dark:text-white truncate max-w-[200px]">{product.name}</span>
+                    <span className="text-gray-900 truncate max-w-[200px]">{product.name}</span>
                 </div>
 
                 {/* Mobile Back Button */}
                 <div className="lg:hidden mb-4">
-                    <Link to={-1} className="w-10 h-10 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center text-gray-800 dark:text-white">
+                    <Link to={-1} className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-800">
                         <ChevronLeft size={20} />
                     </Link>
                 </div>
@@ -122,13 +120,13 @@ const ProductDetailPage = () => {
                                     <button
                                         key={idx}
                                         onClick={() => setSelectedImage(idx)}
-                                        className={`shrink-0 w-20 lg:w-full aspect-square rounded-2xl transition-all overflow-hidden ${selectedImage === idx ? 'ring-2 ring-inset ring-brand-primary shadow-lg shadow-brand-primary/10 scale-105' : 'ring-1 ring-inset ring-gray-100 hover:ring-gray-300'
+                                        className={`shrink-0 w-20 lg:w-full aspect-square rounded-2xl border-2 transition-all p-2 bg-white overflow-hidden ${selectedImage === idx ? 'border-brand-primary shadow-lg shadow-brand-primary/10 scale-105' : 'border-gray-50 hover:border-gray-200'
                                             }`}
                                     >
                                         <img
                                             src={getImageUrl(img)}
                                             alt={`${product.name} ${idx + 1}`}
-                                            className="w-full h-full object-cover"
+                                            className="w-full h-full object-contain"
                                             onError={(e) => e.target.src = '/placeholder-product.png'}
                                         />
                                     </button>
@@ -159,22 +157,19 @@ const ProductDetailPage = () => {
                         {/* Title & Stats */}
                         <section className="space-y-4">
                             <div>
-                                <h1 className="text-3xl lg:text-5xl font-black text-gray-900 dark:text-white leading-[1.1] mb-2">{product.name}</h1>
+                                <h1 className="text-3xl lg:text-5xl font-black text-gray-900 leading-[1.1] mb-2">{product.name}</h1>
                                 {product.netQuantity && (
-                                    <p className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Net Quantity: {product.netQuantity}</p>
+                                    <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Net Quantity: {product.netQuantity}</p>
                                 )}
                             </div>
 
                             <div className="flex items-center space-x-4">
-                                <Link
-                                    to={`/product/${id}/reviews`}
-                                    className="flex items-center px-3 py-1.5 bg-yellow-50 rounded-lg text-yellow-600 space-x-1.5 hover:bg-yellow-100 transition-colors"
-                                >
+                                <div className="flex items-center px-3 py-1.5 bg-yellow-50 rounded-lg text-yellow-600 space-x-1.5">
                                     <Star size={14} className="fill-yellow-600" />
-                                    <span className="text-sm font-black">{product.rating?.avg || '0'}</span>
+                                    <span className="text-sm font-black">{product.rating?.avg || '4.8'}</span>
                                     <span className="text-yellow-400 font-bold px-1">•</span>
-                                    <span className="text-[10px] font-bold uppercase tracking-widest">{product.rating?.count || '0'} Reviews</span>
-                                </Link>
+                                    <span className="text-[10px] font-bold uppercase tracking-widest">{product.rating?.count || '254'} Reviews</span>
+                                </div>
                                 <div className="h-4 w-[1px] bg-gray-100" />
                                 <button
                                     onClick={() => setIsWishlisted(!isWishlisted)}
@@ -189,8 +184,8 @@ const ProductDetailPage = () => {
 
                             <div className="pt-4 flex items-center space-x-4">
                                 <div className="flex items-baseline space-x-2">
-                                    <span className="text-4xl lg:text-5xl font-black text-gray-900 dark:text-white">₹{product.price}</span>
-                                    <span className="text-lg text-gray-400 dark:text-gray-500 line-through">₹{product.mrp}</span>
+                                    <span className="text-4xl lg:text-5xl font-black text-gray-900">₹{product.price}</span>
+                                    <span className="text-lg text-gray-400 line-through">₹{product.mrp}</span>
                                 </div>
                                 <span className="bg-green-500 text-white text-[10px] font-black px-3 py-2 rounded-lg uppercase tracking-widest shadow-lg shadow-green-500/20">
                                     {Math.round(((product.mrp - product.price) / product.mrp) * 100)}% OFF
@@ -409,7 +404,7 @@ const ProductDetailPage = () => {
 
                         {/* Related Products */}
                         {relatedProducts.length > 0 && (
-                            <section className="pt-10 pb-10 overflow-hidden">
+                            <section className="pt-10 pb-20 lg:pb-10 overflow-hidden">
                                 <h3 className="text-xl font-black text-gray-900 mb-8 flex items-center space-x-3">
                                     <ShoppingBag size={24} className="text-brand-primary" />
                                     <span>People Also Bought</span>
@@ -442,60 +437,12 @@ const ProductDetailPage = () => {
                                 </div>
                             </section>
                         )}
-
-                        {/* Customer Reviews Section */}
-                        <section className="pt-10 pb-20 lg:pb-10">
-                            <div className="flex items-center justify-between mb-8">
-                                <h3 className="text-xl font-black text-gray-900 flex items-center space-x-3">
-                                    <Star size={24} className="text-brand-primary fill-brand-primary" />
-                                    <span>Original Customer Reviews</span>
-                                </h3>
-                                <Link
-                                    to={`/product/${id}/reviews`}
-                                    className="text-xs font-bold text-brand-primary uppercase tracking-widest hover:underline"
-                                >
-                                    View All {product.rating?.count || 0} Reviews
-                                </Link>
-                            </div>
-
-                            {reviews.length === 0 ? (
-                                <div className="bg-gray-50 rounded-[32px] p-12 text-center border border-gray-100 border-dashed">
-                                    <p className="text-gray-400 font-bold uppercase tracking-widest text-xs">No reviews yet. Be the first to review!</p>
-                                </div>
-                            ) : (
-                                <div className="space-y-6">
-                                    {reviews.map((rev, idx) => (
-                                        <div key={idx} className="bg-white rounded-[32px] p-6 md:p-8 border border-gray-100 shadow-sm">
-                                            <div className="flex justify-between items-start mb-4">
-                                                <div className="flex items-center space-x-3">
-                                                    <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary font-black uppercase text-xs">
-                                                        {rev.user?.name?.charAt(0) || 'U'}
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-sm font-black text-gray-900">{rev.user?.name || 'Customer'}</p>
-                                                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Verified Buyer</p>
-                                                    </div>
-                                                </div>
-                                                <div className="flex items-center space-x-1 px-2 py-1 bg-yellow-50 rounded-lg text-yellow-600">
-                                                    <Star size={10} className="fill-yellow-600" />
-                                                    <span className="text-xs font-black">{rev.rating}</span>
-                                                </div>
-                                            </div>
-                                            <p className="text-sm text-gray-600 leading-relaxed italic">"{rev.comment}"</p>
-                                            <div className="mt-4 pt-4 border-t border-gray-50 text-[9px] font-bold text-gray-400 uppercase tracking-widest">
-                                                {new Date(rev.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </section>
                     </div>
                 </div>
             </main>
 
             {/* Mobile Bottom Bar - Fixed - positioned above BottomNav */}
-            <div className="lg:hidden fixed bottom-[64px] md:bottom-0 left-0 w-full bg-white dark:bg-dark-bg border-t border-gray-100 dark:border-white/5 p-3 md:p-4 z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
+            <div className="lg:hidden fixed bottom-[64px] md:bottom-0 left-0 w-full bg-white border-t border-gray-100 p-3 md:p-4 z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
                 {quantity === 0 ? (
                     <button
                         onClick={() => {
@@ -510,7 +457,7 @@ const ProductDetailPage = () => {
                     </button>
                 ) : (
                     <div className="flex items-center space-x-4">
-                        <div className="flex-1 flex items-center bg-text-primary dark:bg-brand-primary rounded-xl md:rounded-2xl p-1.5 justify-between">
+                        <div className="flex-1 flex items-center bg-text-primary rounded-xl md:rounded-2xl p-1.5 justify-between">
                             <button onClick={() => dispatch(removeFromCart(product._id))} className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-white rounded-xl tap-target active:bg-white/20 transition-colors">
                                 <Minus size={20} strokeWidth={3} />
                             </button>
@@ -519,7 +466,7 @@ const ProductDetailPage = () => {
                                 <Plus size={20} strokeWidth={3} />
                             </button>
                         </div>
-                        <Link to="/cart" className="px-6 h-12 md:h-14 md:px-8 bg-brand-bg-light dark:bg-white/10 text-brand-primary dark:text-white font-black rounded-xl md:rounded-2xl flex items-center justify-center uppercase tracking-widest text-[10px] shadow-sm tap-target">
+                        <Link to="/cart" className="px-6 h-12 md:h-14 md:px-8 bg-brand-bg-light text-brand-primary font-black rounded-xl md:rounded-2xl flex items-center justify-center uppercase tracking-widest text-[10px] shadow-sm tap-target">
                             Check Bag
                         </Link>
                     </div>

@@ -24,7 +24,7 @@ const StickyCartBar = () => {
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 100, opacity: 0 }}
-                className="fixed bottom-[88px] md:bottom-8 left-4 right-4 md:left-auto md:right-8 z-40"
+                className="fixed bottom-[72px] md:bottom-8 left-4 right-4 md:left-auto md:right-8 z-40"
             >
                 <Link 
                     to="/cart"

@@ -275,7 +275,7 @@ const TrackOrderPage = () => {
             <motion.div
                 initial={{ y: '100%' }}
                 animate={{ y: 0 }}
-                className="absolute bottom-0 left-0 right-0 z-[1000] bg-white dark:bg-dark-bg rounded-t-3xl shadow-[0_-20px_40px_rgba(0,0,0,0.1)] p-6 md:p-8 border-t border-gray-100 dark:border-white/5 h-[35vh] md:h-auto overflow-y-auto"
+                className="absolute bottom-0 left-0 right-0 z-[1000] bg-white rounded-t-3xl shadow-[0_-20px_40px_rgba(0,0,0,0.1)] p-6 md:p-8 border-t border-gray-100 h-[35vh] md:h-auto overflow-y-auto"
             >
                 <div className="max-w-3xl mx-auto relative">
                     <div className="md:hidden absolute -top-4 left-1/2 -translate-x-1/2 w-12 h-1.5 bg-gray-200 rounded-full" />

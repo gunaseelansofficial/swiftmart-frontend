@@ -24,7 +24,6 @@ const OrderHistoryPage = lazy(() => import('./pages/customer/OrderHistoryPage'))
 const TrackOrderPage = lazy(() => import('./pages/customer/TrackOrderPage'));
 const WishlistPage = lazy(() => import('./pages/customer/WishlistPage'));
 const ProfilePage = lazy(() => import('./pages/customer/ProfilePage'));
-const ReviewsPage = lazy(() => import('./pages/customer/ReviewsPage'));
 
 // Admin Pages
 const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'));
@@ -88,6 +87,17 @@ function App() {
 
   useEffect(() => {
     if (!socket || !isAuthenticated || !user) return;
+
+    // 1. Join personal room for status updates (Customer & Partner)
+    socket.emit('join', `user_${user._id}`);
+
+    // 2. Join role-specific rooms
+    if (user.role === 'admin') {
+      socket.emit('admin:join');
+    }
+    if (user.role === 'delivery_partner') {
+      socket.emit('partner:go_online_register', { partnerId: user._id });
+    }
 
     // --- CUSTOMER / SHARED STATUS UPDATES ---
     const events = ['payment_verified', 'packed', 'assigned', 'picked_up', 'delivered'];
@@ -216,7 +226,6 @@ function App() {
             <Route path="/category/:slug" element={<PrivateRoute role="customer" requireAuth={false}><ProductListingPage /></PrivateRoute>} />
             <Route path="/search" element={<PrivateRoute role="customer" requireAuth={false}><ProductListingPage /></PrivateRoute>} />
             <Route path="/product/:id" element={<PrivateRoute role="customer" requireAuth={false}><ProductDetailPage /></PrivateRoute>} />
-            <Route path="/product/:id/reviews" element={<PrivateRoute role="customer" requireAuth={false}><ReviewsPage /></PrivateRoute>} />
             <Route path="/cart" element={<PrivateRoute role="customer" requireAuth={false}><CartPage /></PrivateRoute>} />
             <Route path="/checkout" element={<PrivateRoute role="customer"><CheckoutPage /></PrivateRoute>} />
             <Route path="/order-success/:orderId" element={<PrivateRoute role="customer"><OrderSuccessPage /></PrivateRoute>} />

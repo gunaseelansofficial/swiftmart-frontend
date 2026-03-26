@@ -12,10 +12,7 @@ export const SocketProvider = ({ children }) => {
 
     useEffect(() => {
         if (isAuthenticated && user) {
-            const newSocket = io(import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://127.0.0.1:5000', {
-                transports: ['websocket'],
-                upgrade: false
-            });
+            const newSocket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000');
             setSocket(newSocket);
 
             newSocket.on('connect', () => {

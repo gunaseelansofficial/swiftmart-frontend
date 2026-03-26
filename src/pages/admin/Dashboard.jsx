@@ -1,4 +1,4 @@
-import AdminLayout from '../../components/admin/AdminLayout';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     ArrowUpRight,
@@ -22,9 +22,9 @@ import {
     Tooltip,
     ResponsiveContainer
 } from 'recharts';
-import { useState, useEffect, useRef } from 'react';
+import AdminLayout from '../../components/admin/AdminLayout';
 import api from '../../utils/api';
-import io from 'socket.io-client';
+import { useSocket } from '../../context/SocketContext';
 import toast from 'react-hot-toast';
 
 const data = [
@@ -57,6 +57,7 @@ const StatCard = ({ title, value, icon, change, isPositive }) => (
 );
 
 const Dashboard = () => {
+    const socket = useSocket();
     const [stats, setStats] = useState({
         totalRevenue: 0,
         totalOrders: 0,
@@ -67,22 +68,23 @@ const Dashboard = () => {
     const [topProducts, setTopProducts] = useState([]);
     const [lowStock, setLowStock] = useState([]);
     const [restockValues, setRestockValues] = useState({});
-    const socketRef = useRef(null);
 
     useEffect(() => {
         fetchStats();
         fetchSecondaryData();
 
-        socketRef.current = io(import.meta.env.VITE_API_URL || 'http://localhost:5000');
-        socketRef.current.on('order:new', (newOrder) => {
-            setLiveOrders(prev => [newOrder, ...prev].slice(0, 10));
-            const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
-            audio.play().catch(() => { });
-            toast('New Order Received!', { icon: '🔔' });
-        });
+        if (socket) {
+            const handleNewOrder = (newOrder) => {
+                setLiveOrders(prev => [newOrder, ...prev].slice(0, 10));
+                const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+                audio.play().catch(() => { });
+                // Note: Global toast is handled in App.jsx
+            };
 
-        return () => socketRef.current.disconnect();
-    }, []);
+            socket.on('order:new', handleNewOrder);
+            return () => socket.off('order:new', handleNewOrder);
+        }
+    }, [socket]);
 
     const fetchStats = async () => {
         try {
@@ -143,13 +145,16 @@ const Dashboard = () => {
                             <div className="flex items-center space-x-1.5"><div className="w-2 h-2 rounded-full bg-brand-accent" /><span className="text-[9px] font-bold text-gray-400 uppercase">Growth</span></div>
                         </div>
                     </div>
-                    <div className="h-80">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <LineChart data={data}>
+                    <div className="h-80 w-full" style={{ minHeight: '320px' }}>
+                        <ResponsiveContainer width="99%" height="100%">
+                            <LineChart data={data} margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
                                 <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#9ca3af', fontSize: 10, fontWeight: 'bold' }} dy={10} />
                                 <YAxis axisLine={false} tickLine={false} tick={{ fill: '#9ca3af', fontSize: 10, fontWeight: 'bold' }} />
-                                <Tooltip contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }} />
+                                <Tooltip 
+                                    contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}
+                                    cursor={{ stroke: '#F472B6', strokeWidth: 2 }}
+                                />
                                 <Line type="monotone" dataKey="revenue" stroke="#FF5733" strokeWidth={4} dot={false} activeDot={{ r: 6 }} />
                             </LineChart>
                         </ResponsiveContainer>

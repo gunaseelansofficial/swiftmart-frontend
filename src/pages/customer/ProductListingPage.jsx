@@ -103,7 +103,7 @@ const ProductListingPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-main-bg">
+        <div className="min-h-screen bg-main-bg dark:bg-dark-bg transition-colors">
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -124,18 +124,18 @@ const ProductListingPage = () => {
 
                         {/* Desktop Sort */}
                         <div className="hidden md:flex items-center space-x-3">
-                            <span className="text-xs font-bold text-text-secondary uppercase tracking-wider">Sort by:</span>
+                            <span className="text-xs font-bold text-text-secondary dark:text-gray-400 uppercase tracking-wider">Sort by:</span>
                             <div className="relative group">
-                                <button className="bg-white border border-gray-100 rounded-xl px-4 py-2.5 flex items-center space-x-2 text-sm font-bold text-text-primary hover:border-brand-primary transition-all shadow-sm">
+                                <button className="bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-xl px-4 py-2.5 flex items-center space-x-2 text-sm font-bold text-text-primary dark:text-white hover:border-brand-primary transition-all shadow-sm">
                                     <span>{sortBy === 'relevance' ? 'Relevance' : sortBy.replace('_', ' ')}</span>
                                     <ChevronDown size={14} />
                                 </button>
-                                <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-30 overflow-hidden">
+                                <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-navy-dark rounded-xl shadow-xl border border-gray-100 dark:border-white/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-30 overflow-hidden">
                                     {['relevance', 'price_asc', 'price_desc', 'rating', 'newest'].map((opt) => (
                                         <button
                                             key={opt}
                                             onClick={() => setSortBy(opt)}
-                                            className="w-full text-left px-4 py-3.5 text-sm font-bold text-text-secondary hover:bg-brand-bg-light hover:text-brand-primary transition-colors"
+                                            className="w-full text-left px-4 py-3.5 text-sm font-bold text-text-secondary dark:text-gray-300 hover:bg-brand-bg-light dark:hover:bg-white/5 hover:text-brand-primary transition-colors"
                                         >
                                             {opt === 'relevance' ? 'Relevance' : opt.replace('_', ' ').charAt(0).toUpperCase() + opt.replace('_', ' ').slice(1)}
                                         </button>
@@ -220,11 +220,11 @@ const ProductListingPage = () => {
                         </div>
 
                         {/* In Stock */}
-                        <div className="flex items-center justify-between p-4 bg-white rounded-md border border-gray-100">
-                            <span className="text-sm font-bold text-gray-700">In Stock Only</span>
+                        <div className="flex items-center justify-between p-4 bg-white dark:bg-white/5 rounded-md border border-gray-100 dark:border-white/10">
+                            <span className="text-sm font-bold text-gray-700 dark:text-white">In Stock Only</span>
                             <button
                                 onClick={() => setInStockOnly(!inStockOnly)}
-                                className={`w-10 h-5 rounded-full transition-all relative ${inStockOnly ? 'bg-brand-primary' : 'bg-gray-200'}`}
+                                className={`w-10 h-5 rounded-full transition-all relative ${inStockOnly ? 'bg-brand-primary' : 'bg-gray-200 dark:bg-gray-700'}`}
                             >
                                 <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-all ${inStockOnly ? 'left-5.5 shadow-md' : 'left-0.5 shadow-sm'}`} />
                             </button>

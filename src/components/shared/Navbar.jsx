@@ -5,7 +5,6 @@ import { ShoppingCart, User, Search, MapPin, ChevronDown, LogOut, Package, Heart
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import api from '../../utils/api';
-import ThemeToggle from './ThemeToggle';
 import toast from 'react-hot-toast';
 import { setLocation, setLocationLoading, setLocationError } from '../../store/slices/locationSlice';
 import axios from 'axios';
@@ -95,29 +94,18 @@ const Navbar = () => {
         <nav className="sticky top-0 z-50 bg-white dark:bg-dark-bg border-b border-gray-100 dark:border-white/5 shadow-sm transition-colors">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16 md:h-20">
-                    <div className="flex flex-col md:flex-row md:items-center">
-                        <Link to="/" className="flex flex-col mb-1 md:mb-0">
+                    <div className="flex items-center h-full">
+                        <Link to="/" className="flex flex-col">
                             <span className="text-xl md:text-2xl font-heading font-extrabold text-brand-primary tracking-tight leading-none">SWIFTMART</span>
                             <span className="text-[8px] md:text-[10px] font-bold text-text-secondary tracking-widest hidden md:inline py-1">10 MIN DELIVERY</span>
                         </Link>
-                        
-                        {/* Mobile Location Text (Under Logo) */}
-                        <button 
-                            className="md:hidden flex items-center text-[10px] font-bold text-gray-500"
-                            onClick={() => setShowLocationPopover(true)}
-                        >
-                            <span className="truncate max-w-[120px]">
-                                Delivering to {locationLoading ? 'Locating...' : (selectedLocation?.label || 'Select Location')}
-                            </span>
-                            <ChevronDown size={12} className="ml-1" />
-                        </button>
                     </div>
 
                     <div className="hidden md:block relative" ref={locationRef}>
-                        <button
-                            onClick={() => setShowLocationPopover(true)}
-                            className="flex items-center space-x-2 bg-white px-4 py-2.5 rounded-full cursor-pointer hover:bg-brand-bg-light/50 transition-all border border-gray-100 ml-8 max-w-[200px]"
-                        >
+                         <button
+                             onClick={() => setShowLocationPopover(true)}
+                             className="flex items-center space-x-2 bg-white dark:bg-white/5 px-4 py-2.5 rounded-full cursor-pointer hover:bg-brand-bg-light/50 dark:hover:bg-brand-primary/10 transition-all border border-gray-100 dark:border-white/10 ml-8 max-w-[200px]"
+                         >
                             <MapPin size={18} className="text-brand-primary flex-shrink-0" />
                             <div className="flex flex-col items-start overflow-hidden">
                                 <span className="text-[10px] font-bold text-text-secondary uppercase leading-none">Delivering to</span>
@@ -154,9 +142,9 @@ const Navbar = () => {
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 onKeyDown={handleSearch}
-                                className="w-full bg-gray-50 border border-gray-100 rounded-full py-3.5 pl-12 pr-4 focus:bg-white focus:ring-4 focus:ring-brand-primary/10 focus:border-brand-primary focus:outline-none transition-all text-text-primary placeholder:text-text-secondary/60"
+                                className="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-full py-3.5 pl-12 pr-4 focus:bg-white dark:focus:bg-navy-dark focus:ring-4 focus:ring-brand-primary/10 focus:border-brand-primary focus:outline-none transition-all text-text-primary dark:text-white placeholder:text-text-secondary/60"
                             />
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary group-focus-within:text-brand-primary transition-colors" size={20} />
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary dark:text-gray-400 group-focus-within:text-brand-primary transition-colors" size={20} />
                         </div>
 
                         {/* Autocomplete Dropdown */}
@@ -193,10 +181,10 @@ const Navbar = () => {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex items-center space-x-4 md:space-x-6">
+                    <div className="flex items-center space-x-1 md:space-x-6">
                         {/* Mobile Actions Overlay: Just search icon and cart */}
                         <button 
-                            className="md:hidden text-gray-600 tap-target flex items-center justify-center p-2"
+                            className="md:hidden text-gray-400 tap-target flex items-center justify-center p-2 hover:text-brand-primary transition-colors"
                             onClick={() => {
                                 // On Mobile, scroll to top search bar or focus it on home page 
                                 window.scrollTo({top: 0, behavior: 'smooth'}); 
@@ -205,8 +193,8 @@ const Navbar = () => {
                             <Search size={22} />
                         </button>
 
-                        <div className="hidden md:block">
-                            <ThemeToggle />
+                        <div className="md:hidden">
+                            {isAuthenticated && <NotificationPopover color="text-gray-400" />}
                         </div>
 
                         {!isAuthenticated ? (
@@ -277,16 +265,33 @@ const Navbar = () => {
                         </Link>
 
                         {/* Desktop Only Cart Button Text */}
-                        <Link to="/cart" className="flex items-center space-x-2 relative tap-target md:bg-brand-primary md:text-white text-text-primary md:py-2.5 md:px-6 rounded-xl flex-shrink-0 transition-all hover:bg-brand-primary/90 hover:scale-[1.02] shadow-sm">
-                            <ShoppingCart size={20} className="md:w-5 md:h-5" />
+                        <Link 
+                            to="/cart" 
+                            className="flex items-center space-x-2 relative tap-target md:bg-brand-primary md:text-white text-gray-400 md:py-2.5 md:px-6 rounded-xl flex-shrink-0 transition-all hover:text-brand-primary md:hover:bg-brand-primary/90 md:hover:scale-[1.02] md:shadow-sm"
+                        >
+                            <ShoppingCart size={22} className="md:w-5 md:h-5" />
                             <span className="font-bold hidden md:inline">My Cart</span>
                             {totalQuantity > 0 && (
-                                <span className="absolute md:-top-2 md:-right-2 top-0 right-0 bg-white text-brand-primary md:text-brand-primary text-[10px] sm:text-xs font-black w-4 h-4 md:w-5 md:h-5 flex items-center justify-center rounded-full shadow-lg border-2 border-brand-primary md:border-brand-primary">
+                                <span className="absolute md:-top-2 md:-right-2 -top-1 -right-1 bg-brand-primary text-white md:bg-white md:text-brand-primary text-[8px] md:text-[10px] sm:text-xs font-black w-4 h-4 md:w-5 md:h-5 flex items-center justify-center rounded-full shadow-lg border-2 border-white md:border-brand-primary">
                                     {totalQuantity}
                                 </span>
                             )}
                         </Link>
                     </div>
+                </div>
+
+                {/* Mobile Row 2: Location (More prominent but compact) */}
+                <div className="md:hidden flex items-center pb-3 -mt-1 overflow-hidden">
+                    <button 
+                        className="flex items-center bg-gray-50 dark:bg-white/5 px-3 py-1.5 rounded-full border border-gray-100 dark:border-white/5 w-full max-w-full"
+                        onClick={() => setShowLocationPopover(true)}
+                    >
+                        <MapPin size={14} className="text-brand-primary mr-2 flex-shrink-0" />
+                        <span className="text-[10px] font-black text-gray-600 dark:text-gray-400 uppercase tracking-widest truncate flex-1 text-left">
+                            {locationLoading ? 'Locating...' : (selectedLocation?.label || 'Select Location')}
+                        </span>
+                        <ChevronDown size={12} className="ml-2 text-gray-400 flex-shrink-0" />
+                    </button>
                 </div>
             </div>
         </nav>

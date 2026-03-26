@@ -5,7 +5,6 @@ import {
     MapPin,
     Clock,
     CreditCard,
-    Wallet,
     Banknote,
     Plus,
     ShieldCheck,
@@ -21,10 +20,12 @@ import api from '../../utils/api';
 import { clearCart } from '../../store/slices/cartSlice';
 import { setUser } from '../../store/slices/authSlice';
 import toast from 'react-hot-toast';
+import AddressFormModal from '../../components/shared/AddressFormModal';
 
 const CheckoutPage = () => {
     const { items, totalAmount } = useSelector((state) => state.cart);
     const { user } = useSelector((state) => state.auth);
+    const { selectedLocation } = useSelector((state) => state.location);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -36,6 +37,10 @@ const CheckoutPage = () => {
     const [showLocationPicker, setShowLocationPicker] = useState(false);
     const [newAddress, setNewAddress] = useState({
         label: 'Home',
+        houseNo: '',
+        floor: '', 
+        landmark: '',
+        phone: user?.phone || '',
         street: '',
         city: '',
         pincode: '',
@@ -52,25 +57,46 @@ const CheckoutPage = () => {
         if (items.length === 0) {
             navigate('/cart');
         }
-        if (user?.addresses?.length > 0) {
+        if (user?.addresses?.length > 0 && !selectedAddress) {
             setSelectedAddress(user.addresses.find(a => a.isDefault)?._id || user.addresses[0]._id);
         }
     }, [items, user, navigate]);
 
+    // Auto-populate when location is selected in header or changed
+    useEffect(() => {
+        if (selectedLocation) {
+            setNewAddress(prev => ({
+                ...prev,
+                street: selectedLocation.address || selectedLocation.label || '',
+                city: selectedLocation.city || '',
+                pincode: selectedLocation.pincode || '',
+                lat: selectedLocation.lat,
+                lng: selectedLocation.lng
+            }));
+        }
+    }, [selectedLocation]);
+
     const handleSaveAddress = async () => {
-        if (!newAddress.street || !newAddress.city || !newAddress.pincode) {
-            toast.error('Please fill all address fields');
+        if (!newAddress.houseNo || !newAddress.street || !newAddress.city || !newAddress.pincode) {
+            toast.error('Please fill all required fields (House No, Area, City, Pincode)');
             return;
         }
 
         try {
             setLoading(true);
-            const { data } = await api.post('/auth/address', newAddress);
+            // Combine detailed fields into street for the backend
+            const combinedStreet = `${newAddress.houseNo}${newAddress.floor ? `, ${newAddress.floor}` : ''}, ${newAddress.street}${newAddress.landmark ? ` (Landmark: ${newAddress.landmark})` : ''}`;
+            
+            const { data } = await api.post('/auth/address', {
+                ...newAddress,
+                street: combinedStreet
+            });
+
             if (data.success) {
                 dispatch(setUser(data.user));
                 setSelectedAddress(data.user.addresses[data.user.addresses.length - 1]._id);
                 setShowAddressForm(false);
-                setNewAddress({ label: 'Home', street: '', city: '', pincode: '', isDefault: false });
+                setNewAddress({ label: 'Home', houseNo: '', floor: '', landmark: '', phone: user?.phone || '', street: '', city: '', pincode: '', isDefault: false });
                 toast.success('Address saved successfully');
             }
         } catch (error) {
@@ -141,7 +167,6 @@ const CheckoutPage = () => {
                             });
 
                             if (verifyData.success) {
-                                dispatch(clearCart());
                                 navigate(`/order-success/${verifyData.orderId}`);
                             }
                         } catch (err) {
@@ -171,7 +196,6 @@ const CheckoutPage = () => {
                     totalAmount: finalTotal
                 });
 
-                dispatch(clearCart());
                 navigate(`/order-success/${data.order._id}`);
             }
         } catch (error) {
@@ -211,11 +235,22 @@ const CheckoutPage = () => {
                                     className="flex items-center space-x-2 text-xs font-bold text-brand-primary uppercase tracking-widest hover:underline w-fit sm:w-auto tap-target"
                                 >
                                     <Plus size={14} />
-                                    <span>{showAddressForm ? 'Cancel' : 'Add New'}</span>
+                                    <span>Add New</span>
                                 </button>
                             </div>
 
-                            {!showAddressForm ? (
+                            {!user?.addresses || user.addresses.length === 0 ? (
+                                <div className="py-12 text-center bg-gray-50 dark:bg-white/5 rounded-2xl border-2 border-dashed border-gray-100 dark:border-white/10 text-gray-400">
+                                    <MapPin size={40} className="mx-auto mb-4 opacity-20" />
+                                    <p className="text-sm font-bold uppercase tracking-widest mb-4">No addresses saved yet</p>
+                                    <button 
+                                        onClick={() => setShowAddressForm(true)}
+                                        className="btn-primary px-8 py-3 rounded-xl text-xs"
+                                    >
+                                        Add Delivery Address
+                                    </button>
+                                </div>
+                            ) : (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                                     {user?.addresses?.map((addr) => (
                                         <motion.div
@@ -231,63 +266,35 @@ const CheckoutPage = () => {
                                                 {selectedAddress === addr._id && <CheckCircle2 size={16} className="text-brand-primary" />}
                                             </div>
                                             <p className="text-sm text-gray-800 dark:text-white font-bold mb-1">{addr.street}</p>
-                                            <p className="text-xs text-text-muted dark:text-gray-400">{addr.city}, {addr.pincode}</p>
+                                            <p className="text-xs text-text-muted dark:text-gray-400 mb-2">{addr.city}, {addr.pincode}</p>
+                                            {addr.phone && (
+                                                <div className="flex items-center space-x-2 text-[10px] font-bold text-gray-500 bg-gray-100 dark:bg-white/5 w-fit px-2 py-1 rounded">
+                                                    <span>📞 {addr.phone}</span>
+                                                </div>
+                                            )}
                                         </motion.div>
                                     ))}
-                                    {(!user?.addresses || user.addresses.length === 0) && (
-                                        <div className="col-span-full py-8 text-center bg-gray-50 dark:bg-white/5 rounded-md border-2 border-dashed border-gray-100 dark:border-white/10 text-gray-400">
-                                            <p className="text-sm font-bold">No addresses saved. Add one to continue.</p>
-                                        </div>
-                                    )}
-                                </div>
-                            ) : (
-                                <div className="grid grid-cols-2 gap-4 animate-in slide-in-from-top-4 duration-300">
-                                    <div className="col-span-2 space-y-4">
-                                        <button
-                                            onClick={() => setShowLocationPicker(true)}
-                                            className="w-full flex items-center justify-center space-x-2 py-3 bg-brand-primary/10 border-2 border-dashed border-brand-primary/30 rounded-xl text-brand-primary text-xs font-black uppercase tracking-widest hover:bg-brand-primary/20 transition-all shadow-sm"
-                                        >
-                                            <Navigation size={16} />
-                                            <span>Pick Location on Map</span>
-                                        </button>
-                                        <input
-                                            type="text"
-                                            placeholder="Street Address"
-                                            value={newAddress.street}
-                                            onChange={(e) => setNewAddress({ ...newAddress, street: e.target.value })}
-                                            className="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 dark:text-white"
-                                        />
-                                    </div>
-                                    <input
-                                        type="text"
-                                        placeholder="City"
-                                        value={newAddress.city}
-                                        onChange={(e) => setNewAddress({ ...newAddress, city: e.target.value })}
-                                        className="bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 dark:text-white"
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Zip Code / Pincode"
-                                        value={newAddress.pincode}
-                                        onChange={(e) => setNewAddress({ ...newAddress, pincode: e.target.value })}
-                                        className="bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 dark:text-white"
-                                    />
-                                    <button
-                                        onClick={handleSaveAddress}
-                                        disabled={loading}
-                                        className="col-span-1 sm:col-span-2 btn-primary !py-3 flex items-center justify-center tap-target"
-                                    >
-                                        {loading ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : 'Save Address & Use'}
-                                    </button>
-
-                                    <LocationPickerModal
-                                        isOpen={showLocationPicker}
-                                        onClose={() => setShowLocationPicker(false)}
-                                        onConfirm={handleLocationPickerConfirm}
-                                        initialLocation={newAddress.lat ? [newAddress.lat, newAddress.lng] : null}
-                                    />
                                 </div>
                             )}
+
+                            {/* Address Form Modal */}
+                            <AddressFormModal
+                                isOpen={showAddressForm}
+                                onClose={() => setShowAddressForm(false)}
+                                address={newAddress}
+                                setAddress={setNewAddress}
+                                onSave={handleSaveAddress}
+                                onOpenLocationPicker={() => setShowLocationPicker(true)}
+                                loading={loading}
+                            />
+
+                            {/* Location Picker Modal (stays as is, triggered from AddressFormModal) */}
+                            <LocationPickerModal
+                                isOpen={showLocationPicker}
+                                onClose={() => setShowLocationPicker(false)}
+                                onConfirm={handleLocationPickerConfirm}
+                                initialLocation={newAddress.lat ? [newAddress.lat, newAddress.lng] : null}
+                            />
                         </section>
 
                         {/* Step 2: Delivery Type */}
@@ -296,39 +303,16 @@ const CheckoutPage = () => {
                                 <div className="w-8 h-8 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold">2</div>
                                 <h2 className="text-xl font-heading font-extrabold text-gray-800 dark:text-white uppercase tracking-widest">Delivery Type</h2>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
-                                <button
-                                    onClick={() => setDeliveryType('express')}
-                                    className={`flex items-center p-4 md:p-6 rounded-xl md:rounded-md border-2 transition-all tap-target ${deliveryType === 'express'
-                                        ? 'border-brand-primary bg-brand-primary/5 shadow-lg'
-                                        : 'border-gray-50 dark:border-white/5 bg-gray-50 dark:bg-white/5'
-                                        }`}
-                                >
-                                    <div className={`w-12 h-12 rounded-full flex items-center justify-center mr-4 ${deliveryType === 'express' ? 'bg-brand-primary text-white' : 'bg-white dark:bg-navy-dark text-gray-400'
-                                        }`}>
+                            <div className="grid grid-cols-1 gap-3 md:gap-6">
+                                <div className="flex items-center p-4 md:p-6 rounded-xl md:rounded-md border-2 transition-all border-brand-primary bg-brand-primary/5 shadow-lg">
+                                    <div className="w-12 h-12 rounded-full flex items-center justify-center mr-4 bg-brand-primary text-white">
                                         <Clock size={24} />
                                     </div>
                                     <div className="text-left">
                                         <p className="font-bold text-gray-800 dark:text-white">⚡ Express Delivery</p>
                                         <p className="text-xs text-text-muted dark:text-gray-400">In 10-15 minutes • Free above ₹299</p>
                                     </div>
-                                </button>
-                                <button
-                                    onClick={() => setDeliveryType('scheduled')}
-                                    className={`flex items-center p-4 md:p-6 rounded-xl md:rounded-md border-2 transition-all tap-target ${deliveryType === 'scheduled'
-                                        ? 'border-brand-primary bg-brand-primary/5 shadow-lg'
-                                        : 'border-gray-50 dark:border-white/5 bg-gray-50 dark:bg-white/5'
-                                        }`}
-                                >
-                                    <div className={`w-12 h-12 rounded-full flex items-center justify-center mr-4 ${deliveryType === 'scheduled' ? 'bg-brand-primary text-white' : 'bg-white dark:bg-navy-dark text-gray-400'
-                                        }`}>
-                                        <CheckCircle2 size={24} />
-                                    </div>
-                                    <div className="text-left">
-                                        <p className="font-bold text-gray-800 dark:text-white">📅 Scheduled</p>
-                                        <p className="text-xs text-text-muted dark:text-gray-400">Choose your time slot later</p>
-                                    </div>
-                                </button>
+                                </div>
                             </div>
                         </section>
 
@@ -341,8 +325,7 @@ const CheckoutPage = () => {
                             <div className="space-y-3 md:space-y-4">
                                 {[
                                     { id: 'online', name: 'Pay Online (Razorpay)', icon: <CreditCard size={20} />, sub: 'Credit/Debit Card, UPI, Netbanking' },
-                                    { id: 'cod', name: 'Cash on Delivery', icon: <Banknote size={20} />, sub: 'Pay when your items arrive' },
-                                    { id: 'wallet', name: 'Swift Wallet', icon: <Wallet size={20} />, sub: 'Quick checkout with stored balance' }
+                                    { id: 'cod', name: 'Cash on Delivery', icon: <Banknote size={20} />, sub: 'Pay when your items arrive' }
                                 ].map((method) => (
                                     <button
                                         key={method.id}

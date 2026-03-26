@@ -38,6 +38,7 @@ const PartnerDetails = () => {
         vehicleNumber: '',
         licenseNumber: '',
         commissionRate: 15,
+        maxActiveOrders: 1,
         bankHolderName: '',
         bankAccountNo: '',
         bankIfsc: '',
@@ -68,6 +69,7 @@ const PartnerDetails = () => {
             vehicleNumber: partner.vehicleNumber || '',
             licenseNumber: partner.licenseNumber || '',
             commissionRate: Math.round((partner.commissionRate || 0.15) * 100),
+            maxActiveOrders: partner.maxActiveOrders || 1,
             bankHolderName: partner.bankDetails?.holderName || '',
             bankAccountNo: partner.bankDetails?.accountNo || '',
             bankIfsc: partner.bankDetails?.ifsc || '',
@@ -89,6 +91,7 @@ const PartnerDetails = () => {
                 vehicleNumber: editForm.vehicleNumber,
                 licenseNumber: editForm.licenseNumber,
                 commissionRate: parseFloat(editForm.commissionRate) / 100,
+                maxActiveOrders: Number(editForm.maxActiveOrders),
                 bankDetails: {
                     holderName: editForm.bankHolderName,
                     accountNo: editForm.bankAccountNo,
@@ -288,7 +291,8 @@ const PartnerDetails = () => {
                             <div>
                                 <p className="text-[9px] text-gray-500 font-bold uppercase mb-1">Vehicle Info</p>
                                 <p className="text-sm font-bold">{partner.vehicleType || 'N/A'} - {partner.vehicleNumber || 'N/A'}</p>
-                                <p className="text-[10px] opacity-50 font-bold uppercase">DL: {partner.licenseNumber || 'N/A'}</p>
+                                <p className="text-[10px] opacity-70 font-bold uppercase mt-1">DL: {partner.licenseNumber || 'N/A'}</p>
+                                <p className="text-[10px] opacity-70 font-bold uppercase mt-1 text-brand-primary">Max Orders: {partner.maxActiveOrders || 1}</p>
                             </div>
                             <div>
                                 <p className="text-[9px] text-gray-500 font-bold uppercase mb-1">Contact Details</p>
@@ -381,6 +385,11 @@ const PartnerDetails = () => {
                                             className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-bold text-gray-800 focus:outline-none focus:border-brand-primary transition-colors pr-10" />
                                         <Percent size={14} className="absolute right-3 top-3 text-gray-400" />
                                     </div>
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold text-gray-500 uppercase mb-1.5">Max Active Orders</label>
+                                    <input name="maxActiveOrders" type="number" min="1" max="10" value={editForm.maxActiveOrders} onChange={handleEditChange}
+                                        className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-bold text-gray-800 focus:outline-none focus:border-brand-primary transition-colors" />
                                 </div>
 
                                 {/* Bank Details */}

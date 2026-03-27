@@ -91,7 +91,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="sticky top-0 z-50 bg-white dark:bg-dark-bg border-b border-gray-100 dark:border-white/5 shadow-sm transition-colors">
+        <nav className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm transition-colors">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16 md:h-20">
                     <div className="flex items-center h-full">
@@ -104,7 +104,7 @@ const Navbar = () => {
                     <div className="hidden md:block relative" ref={locationRef}>
                          <button
                              onClick={() => setShowLocationPopover(true)}
-                             className="flex items-center space-x-2 bg-white dark:bg-white/5 px-4 py-2.5 rounded-full cursor-pointer hover:bg-brand-bg-light/50 dark:hover:bg-brand-primary/10 transition-all border border-gray-100 dark:border-white/10 ml-8 max-w-[200px]"
+                             className="flex items-center space-x-2 bg-white px-4 py-2.5 rounded-full cursor-pointer hover:bg-brand-bg-light/50 transition-all border border-gray-100 ml-8 max-w-[200px]"
                          >
                             <MapPin size={18} className="text-brand-primary flex-shrink-0" />
                             <div className="flex flex-col items-start overflow-hidden">
@@ -142,9 +142,9 @@ const Navbar = () => {
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 onKeyDown={handleSearch}
-                                className="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-full py-3.5 pl-12 pr-4 focus:bg-white dark:focus:bg-navy-dark focus:ring-4 focus:ring-brand-primary/10 focus:border-brand-primary focus:outline-none transition-all text-text-primary dark:text-white placeholder:text-text-secondary/60"
+                                className="w-full bg-gray-50 border border-gray-100 rounded-full py-3.5 pl-12 pr-4 focus:bg-white focus:ring-4 focus:ring-brand-primary/10 focus:border-brand-primary focus:outline-none transition-all text-text-primary placeholder:text-text-secondary/60"
                             />
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary dark:text-gray-400 group-focus-within:text-brand-primary transition-colors" size={20} />
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary group-focus-within:text-brand-primary transition-colors" size={20} />
                         </div>
 
                         {/* Autocomplete Dropdown */}
@@ -154,14 +154,14 @@ const Navbar = () => {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: 10 }}
-                                    className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-navy-light rounded-md shadow-2xl border border-gray-100 dark:border-white/10 overflow-hidden"
+                                    className="absolute top-full left-0 right-0 mt-2 bg-white rounded-md shadow-2xl border border-gray-100 overflow-hidden"
                                 >
                                     {searchResults.map((p) => (
                                         <Link
                                             key={p._id}
                                             to={`/product/${p._id}`}
                                             onClick={() => setShowResults(false)}
-                                            className="flex items-center space-x-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors border-b border-gray-50 dark:border-white/5 last:border-none"
+                                            className="flex items-center space-x-3 px-4 py-3 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-none"
                                         >
                                             <img 
                                                 src={getImageUrl(p.images?.[0] || p.image)} 
@@ -170,7 +170,7 @@ const Navbar = () => {
                                                 onError={(e) => e.target.src = '/placeholder-product.png'}
                                             />
                                             <div className="flex-1">
-                                                <p className="text-sm font-bold text-gray-800 dark:text-white">{p.name}</p>
+                                                <p className="text-sm font-bold text-gray-800 ">{p.name}</p>
                                                 <p className="text-xs font-bold text-brand-primary">₹{p.price}</p>
                                             </div>
                                         </Link>
@@ -199,7 +199,7 @@ const Navbar = () => {
 
                         {!isAuthenticated ? (
                             <div className="hidden md:flex items-center">
-                                <Link to="/login" className="text-sm font-bold text-gray-700 dark:text-gray-300 hover:text-brand-primary">
+                                <Link to="/login" className="text-sm font-bold text-gray-700 hover:text-brand-primary">
                                     Login
                                 </Link>
                             </div>
@@ -212,7 +212,7 @@ const Navbar = () => {
                                     <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary font-bold">
                                         {user?.name?.charAt(0)}
                                     </div>
-                                    <span className="hidden md:block text-sm font-bold text-gray-700 dark:text-gray-200">{user?.name}</span>
+                                    <span className="hidden md:block text-sm font-bold text-gray-700 ">{user?.name}</span>
                                 </button>
 
                                 <AnimatePresence>
@@ -258,7 +258,7 @@ const Navbar = () => {
                         <Link to="/wishlist" className="relative group p-2 text-gray-400 hover:text-red-500 transition-colors hidden md:block">
                             <Heart size={24} className={user?.wishlist?.length > 0 ? "fill-red-500 text-red-500" : ""} />
                             {user?.wishlist?.length > 0 && (
-                                <span className="absolute top-0 right-0 bg-red-500 text-white text-[8px] font-bold w-4 h-4 flex items-center justify-center rounded-full border-2 border-white dark:border-dark-bg shadow-sm">
+                                <span className="absolute top-0 right-0 bg-red-500 text-white text-[8px] font-bold w-4 h-4 flex items-center justify-center rounded-full border-2 border-white shadow-sm">
                                     {user.wishlist.length}
                                 </span>
                             )}
@@ -283,11 +283,11 @@ const Navbar = () => {
                 {/* Mobile Row 2: Location (More prominent but compact) */}
                 <div className="md:hidden flex items-center pb-3 -mt-1 overflow-hidden">
                     <button 
-                        className="flex items-center bg-gray-50 dark:bg-white/5 px-3 py-1.5 rounded-full border border-gray-100 dark:border-white/5 w-full max-w-full"
+                        className="flex items-center bg-gray-50 px-3 py-1.5 rounded-full border border-gray-100 w-full max-w-full"
                         onClick={() => setShowLocationPopover(true)}
                     >
                         <MapPin size={14} className="text-brand-primary mr-2 flex-shrink-0" />
-                        <span className="text-[10px] font-black text-gray-600 dark:text-gray-400 uppercase tracking-widest truncate flex-1 text-left">
+                        <span className="text-[10px] font-black text-gray-600 uppercase tracking-widest truncate flex-1 text-left">
                             {locationLoading ? 'Locating...' : (selectedLocation?.label || 'Select Location')}
                         </span>
                         <ChevronDown size={12} className="ml-2 text-gray-400 flex-shrink-0" />

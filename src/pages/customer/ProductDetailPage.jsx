@@ -92,22 +92,22 @@ const ProductDetailPage = () => {
     if (!product) return null;
 
     return (
-        <div className="min-h-screen bg-white dark:bg-dark-bg font-body transition-colors">
+        <div className="min-h-screen bg-white font-body transition-colors">
             <Navbar />
 
             <main className="max-w-full lg:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-8">
                 {/* Breadcrumbs - Desktop Only */}
-                <div className="hidden lg:flex items-center space-x-2 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-8">
+                <div className="hidden lg:flex items-center space-x-2 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-8">
                     <Link to="/" className="hover:text-brand-primary transition-colors">Home</Link>
                     <ChevronRight size={10} strokeWidth={3} />
                     <Link to={`/category/${product.category?.slug}`} className="hover:text-brand-primary transition-colors">{product.category?.name}</Link>
                     <ChevronRight size={10} strokeWidth={3} />
-                    <span className="text-gray-900 dark:text-white truncate max-w-[200px]">{product.name}</span>
+                    <span className="text-gray-900 truncate max-w-[200px]">{product.name}</span>
                 </div>
 
                 {/* Mobile Back Button */}
                 <div className="lg:hidden mb-4">
-                    <Link to={-1} className="w-10 h-10 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center text-gray-800 dark:text-white">
+                    <Link to={-1} className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-800 ">
                         <ChevronLeft size={20} />
                     </Link>
                 </div>
@@ -159,9 +159,9 @@ const ProductDetailPage = () => {
                         {/* Title & Stats */}
                         <section className="space-y-4">
                             <div>
-                                <h1 className="text-3xl lg:text-5xl font-black text-gray-900 dark:text-white leading-[1.1] mb-2">{product.name}</h1>
+                                <h1 className="text-3xl lg:text-5xl font-black text-gray-900 leading-[1.1] mb-2">{product.name}</h1>
                                 {product.netQuantity && (
-                                    <p className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Net Quantity: {product.netQuantity}</p>
+                                    <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Net Quantity: {product.netQuantity}</p>
                                 )}
                             </div>
 
@@ -189,8 +189,8 @@ const ProductDetailPage = () => {
 
                             <div className="pt-4 flex items-center space-x-4">
                                 <div className="flex items-baseline space-x-2">
-                                    <span className="text-4xl lg:text-5xl font-black text-gray-900 dark:text-white">₹{product.price}</span>
-                                    <span className="text-lg text-gray-400 dark:text-gray-500 line-through">₹{product.mrp}</span>
+                                    <span className="text-4xl lg:text-5xl font-black text-gray-900 ">₹{product.price}</span>
+                                    <span className="text-lg text-gray-400 line-through">₹{product.mrp}</span>
                                 </div>
                                 <span className="bg-green-500 text-white text-[10px] font-black px-3 py-2 rounded-lg uppercase tracking-widest shadow-lg shadow-green-500/20">
                                     {Math.round(((product.mrp - product.price) / product.mrp) * 100)}% OFF
@@ -495,7 +495,7 @@ const ProductDetailPage = () => {
             </main>
 
             {/* Mobile Bottom Bar - Fixed - positioned above BottomNav */}
-            <div className="lg:hidden fixed bottom-[64px] md:bottom-0 left-0 w-full bg-white dark:bg-dark-bg border-t border-gray-100 dark:border-white/5 p-3 md:p-4 z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
+            <div className="lg:hidden fixed bottom-[64px] md:bottom-0 left-0 w-full bg-white border-t border-gray-100 p-3 md:p-4 z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
                 {quantity === 0 ? (
                     <button
                         onClick={() => {
@@ -510,7 +510,7 @@ const ProductDetailPage = () => {
                     </button>
                 ) : (
                     <div className="flex items-center space-x-4">
-                        <div className="flex-1 flex items-center bg-text-primary dark:bg-brand-primary rounded-xl md:rounded-2xl p-1.5 justify-between">
+                        <div className="flex-1 flex items-center bg-text-primary rounded-xl md:rounded-2xl p-1.5 justify-between">
                             <button onClick={() => dispatch(removeFromCart(product._id))} className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-white rounded-xl tap-target active:bg-white/20 transition-colors">
                                 <Minus size={20} strokeWidth={3} />
                             </button>
@@ -519,7 +519,7 @@ const ProductDetailPage = () => {
                                 <Plus size={20} strokeWidth={3} />
                             </button>
                         </div>
-                        <Link to="/cart" className="px-6 h-12 md:h-14 md:px-8 bg-brand-bg-light dark:bg-white/10 text-brand-primary dark:text-white font-black rounded-xl md:rounded-2xl flex items-center justify-center uppercase tracking-widest text-[10px] shadow-sm tap-target">
+                        <Link to="/cart" className="px-6 h-12 md:h-14 md:px-8 bg-brand-bg-light text-brand-primary font-black rounded-xl md:rounded-2xl flex items-center justify-center uppercase tracking-widest text-[10px] shadow-sm tap-target">
                             Check Bag
                         </Link>
                     </div>

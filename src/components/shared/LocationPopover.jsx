@@ -101,13 +101,13 @@ const LocationPopover = ({ isOpen, onClose, onOpenMap, currentAddress }) => {
                         onClick={onClose}
                     />
                     <motion.div
-                        className="fixed bottom-0 left-0 right-0 bg-white dark:bg-navy-dark rounded-t-[2.5rem] p-6 z-[2001] md:hidden shadow-2xl max-h-[85vh] overflow-y-auto"
+                        className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[2.5rem] p-6 z-[2001] md:hidden shadow-2xl max-h-[85vh] overflow-y-auto"
                         initial="hidden"
                         animate="visible"
                         exit="hidden"
                         variants={sheetVariants}
                     >
-                        <div className="w-12 h-1.5 bg-gray-200 dark:bg-white/10 rounded-full mx-auto mb-6" />
+                        <div className="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6" />
                         <LocationContent 
                             searchQuery={searchQuery}
                             handleSearch={handleSearch}
@@ -123,7 +123,7 @@ const LocationPopover = ({ isOpen, onClose, onOpenMap, currentAddress }) => {
                     {/* Desktop Dropdown */}
                     <motion.div
                         ref={popoverRef}
-                        className="hidden md:block absolute top-full left-0 mt-3 w-96 bg-white dark:bg-navy-dark rounded-2xl shadow-2xl border border-gray-100 dark:border-white/10 overflow-hidden z-[2001]"
+                        className="hidden md:block absolute top-full left-0 mt-3 w-96 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-[2001]"
                         initial="hidden"
                         animate="visible"
                         exit="hidden"
@@ -152,7 +152,7 @@ const LocationContent = ({ searchQuery, handleSearch, loading, results, handleSe
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <h3 className="text-xl font-heading font-extrabold text-[#1A1A2E] dark:text-white uppercase italic tracking-tighter">
+                <h3 className="text-xl font-heading font-extrabold text-[#1A1A2E] uppercase italic tracking-tighter">
                     Select Location
                 </h3>
                 {selectedLocation?.isApproximate && (
@@ -170,7 +170,7 @@ const LocationContent = ({ searchQuery, handleSearch, loading, results, handleSe
                     placeholder="Search for area, street name..."
                     value={searchQuery}
                     onChange={(e) => handleSearch(e.target.value)}
-                    className="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-xl py-3 pl-12 pr-4 focus:bg-white dark:focus:bg-navy-light focus:ring-2 focus:ring-brand-primary/20 focus:outline-none transition-all dark:text-white text-sm"
+                    className="w-full bg-gray-50 border border-gray-100 rounded-xl py-3 pl-12 pr-4 focus:bg-white focus:ring-2 focus:ring-brand-primary/20 focus:outline-none transition-all text-sm"
                 />
                 {loading && (
                     <div className="absolute right-4 top-1/2 -translate-y-1/2">
@@ -186,11 +186,11 @@ const LocationContent = ({ searchQuery, handleSearch, loading, results, handleSe
                         <button
                             key={idx}
                             onClick={() => handleSelect(item)}
-                            className="w-full flex items-start space-x-3 p-3 hover:bg-gray-50 dark:hover:bg-white/5 rounded-xl transition-all text-left group"
+                            className="w-full flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-xl transition-all text-left group"
                         >
                             <MapPin className="text-gray-400 group-hover:text-brand-primary shrink-0 transition-colors" size={18} />
                             <div>
-                                <p className="text-sm font-bold text-gray-800 dark:text-gray-200 leading-tight">
+                                <p className="text-sm font-bold text-gray-800 leading-tight">
                                     {item.display_name.split(',')[0]}
                                 </p>
                                 <p className="text-[10px] text-gray-400 line-clamp-1">{item.display_name}</p>
@@ -227,10 +227,10 @@ const LocationContent = ({ searchQuery, handleSearch, loading, results, handleSe
                                     <button
                                         key={idx}
                                         onClick={() => handleSelect({ display_name: loc.address, lat: loc.lat, lon: loc.lng })}
-                                        className="w-full flex items-center space-x-3 p-3 hover:bg-gray-50 dark:hover:bg-white/5 rounded-xl transition-all text-left"
+                                        className="w-full flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-xl transition-all text-left"
                                     >
                                         <MapPin className="text-gray-300" size={16} />
-                                        <span className="text-xs font-bold text-gray-600 dark:text-gray-400 truncate">{loc.label}</span>
+                                        <span className="text-xs font-bold text-gray-600 truncate">{loc.label}</span>
                                     </button>
                                 ))}
                             </div>

@@ -256,14 +256,14 @@ const TrackOrderPage = () => {
                     <div className="absolute top-24 right-6 flex flex-col space-y-3 z-[1000]">
                         <button
                             onClick={handleLocateMe}
-                            className="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-white/10 text-gray-600 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
+                            className="p-3 bg-white rounded-xl shadow-lg border border-gray-100 text-gray-600 hover:bg-gray-50 transition-all"
                             title="Locate Delivery Address"
                         >
                             <Target size={20} />
                         </button>
                         <button
                             onClick={handleFitBounds}
-                            className="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-white/10 text-gray-600 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
+                            className="p-3 bg-white rounded-xl shadow-lg border border-gray-100 text-gray-600 hover:bg-gray-50 transition-all"
                             title="View Entire Route"
                         >
                             <Maximize2 size={20} />
@@ -275,7 +275,7 @@ const TrackOrderPage = () => {
             <motion.div
                 initial={{ y: '100%' }}
                 animate={{ y: 0 }}
-                className="absolute bottom-0 left-0 right-0 z-[1000] bg-white dark:bg-dark-bg rounded-t-3xl shadow-[0_-20px_40px_rgba(0,0,0,0.1)] p-6 md:p-8 border-t border-gray-100 dark:border-white/5 h-[35vh] md:h-auto overflow-y-auto"
+                className="absolute bottom-0 left-0 right-0 z-[1000] bg-white rounded-t-3xl shadow-[0_-20px_40px_rgba(0,0,0,0.1)] p-6 md:p-8 border-t border-gray-100 h-[35vh] md:h-auto overflow-y-auto"
             >
                 <div className="max-w-3xl mx-auto relative">
                     <div className="md:hidden absolute -top-4 left-1/2 -translate-x-1/2 w-12 h-1.5 bg-gray-200 rounded-full" />

@@ -13,7 +13,7 @@ import { getImageUrl } from '../../utils/imageHelper';
 const ErrorState = ({ onRetry, message = "Couldn't load products" }) => (
     <div className="flex flex-col items-center justify-center py-10 text-center space-y-3">
         <AlertCircle className="text-gray-300" size={32} />
-        <p className="text-sm text-text-secondary dark:text-gray-400">{message}</p>
+        <p className="text-sm text-text-secondary ">{message}</p>
         <button
             onClick={onRetry}
             className="flex items-center space-x-1.5 text-xs font-bold text-brand-primary border border-brand-primary/30 px-4 py-2 rounded-lg hover:bg-brand-primary/5 transition-colors"
@@ -29,7 +29,7 @@ const ProductStrip = ({ title, products, loading, error, onRetry, link }) => (
     <section className="mb-12 md:mb-16">
         <div className="flex justify-between items-end mb-6">
             <div>
-                <h3 className="text-xl md:text-2xl font-bold text-text-primary dark:text-white tracking-tight">
+                <h3 className="text-xl md:text-2xl font-bold text-text-primary tracking-tight">
                     {title}
                 </h3>
             </div>
@@ -60,7 +60,7 @@ const ProductStrip = ({ title, products, loading, error, onRetry, link }) => (
                 ) : products.length === 0 ? (
                     // FIX 2: Empty state when no products returned
                     <div className="flex items-center justify-center w-full py-10">
-                        <p className="text-sm text-text-secondary dark:text-gray-400">No products available right now.</p>
+                        <p className="text-sm text-text-secondary ">No products available right now.</p>
                     </div>
                 ) : (
                     products.map((product) => (
@@ -208,7 +208,7 @@ const Home = () => {
 
     return (
         <div
-            className="min-h-screen bg-light-bg dark:bg-dark-bg transition-colors"
+            className="min-h-screen bg-light-bg transition-colors"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
@@ -239,7 +239,7 @@ const Home = () => {
                         <input
                             type="text"
                             placeholder="Search for 'milk', 'eggs'..."
-                            className="w-full bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-xl py-3 pl-12 pr-4 focus:ring-2 focus:ring-brand-primary/20 focus:outline-none transition-all shadow-sm text-sm h-12 text-text-primary dark:text-white"
+                            className="w-full bg-white border border-gray-100 rounded-xl py-3 pl-12 pr-4 focus:ring-2 focus:ring-brand-primary/20 focus:outline-none transition-all shadow-sm text-sm h-12 text-text-primary "
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
                                     window.location.href = `/search?q=${encodeURIComponent(e.target.value)}`;
@@ -254,8 +254,8 @@ const Home = () => {
                 <section className="mb-10 md:mb-16 relative group/slider">
                     <div className="flex justify-between items-end mb-6 md:mb-8">
                         <div>
-                            <h3 className="text-xl md:text-2xl font-bold text-text-primary dark:text-white tracking-tight">Shop by Category</h3>
-                            <p className="text-xs md:text-sm text-text-secondary dark:text-gray-400 hidden md:block mt-1">Explore our wide range of products</p>
+                            <h3 className="text-xl md:text-2xl font-bold text-text-primary tracking-tight">Shop by Category</h3>
+                            <p className="text-xs md:text-sm text-text-secondary hidden md:block mt-1">Explore our wide range of products</p>
                         </div>
                         <div className="hidden md:flex space-x-2">
                             <button
@@ -289,7 +289,7 @@ const Home = () => {
                                     className="block min-w-[80px] md:min-w-[140px] snap-center md:snap-start"
                                 >
                                     <div className="flex flex-col items-center justify-center text-center group/cat">
-                                        <div className="w-16 h-16 md:w-24 md:h-24 rounded-2xl overflow-hidden bg-white dark:bg-white/5 mb-3 shadow-sm border border-card-border dark:border-white/10 group-hover/cat:scale-105 transition-transform">
+                                        <div className="w-16 h-16 md:w-24 md:h-24 rounded-2xl overflow-hidden bg-white mb-3 shadow-sm border border-card-border group-hover/cat:scale-105 transition-transform">
                                             <img
                                                 src={getImageUrl(cat.image)}
                                                 className="w-full h-full object-cover"
@@ -297,7 +297,7 @@ const Home = () => {
                                                 onError={(e) => e.target.src = '/placeholder-product.png'}
                                             />
                                         </div>
-                                        <span className="text-[10px] md:text-xs font-bold text-text-primary dark:text-white uppercase tracking-wide line-clamp-1">{cat.name}</span>
+                                        <span className="text-[10px] md:text-xs font-bold text-text-primary uppercase tracking-wide line-clamp-1">{cat.name}</span>
                                     </div>
                                 </Link>
                             ))
@@ -314,9 +314,9 @@ const Home = () => {
                         </div>
                     ) : errorBanners ? (
                         // FIX 2: Banner error state with retry
-                        <div className="rounded-2xl border border-gray-100 dark:border-white/10 p-8 flex flex-col items-center justify-center space-y-3">
+                        <div className="rounded-2xl border border-gray-100 p-8 flex flex-col items-center justify-center space-y-3">
                             <AlertCircle className="text-gray-300" size={32} />
-                            <p className="text-sm text-text-secondary dark:text-gray-400">Couldn't load banners</p>
+                            <p className="text-sm text-text-secondary ">Couldn't load banners</p>
                             <button
                                 onClick={fetchBanners}
                                 className="flex items-center space-x-1.5 text-xs font-bold text-brand-primary border border-brand-primary/30 px-4 py-2 rounded-lg hover:bg-brand-primary/5 transition-colors"
@@ -430,7 +430,7 @@ const Home = () => {
                                                 onClick={() => setActiveBanner(idx)}
                                                 className={`rounded-full transition-all ${idx === activeBanner
                                                         ? 'w-5 h-2 bg-brand-primary'
-                                                        : 'w-2 h-2 bg-gray-300 dark:bg-white/20'
+                                                        : 'w-2 h-2 bg-gray-300 '
                                                     }`}
                                             />
                                         ))}

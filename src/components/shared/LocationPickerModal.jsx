@@ -79,22 +79,22 @@ const LocationPickerModal = ({ isOpen, onClose, onConfirm, initialLocation }) =>
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="relative w-full max-w-xl bg-white dark:bg-navy-dark rounded-[32px] overflow-hidden shadow-2xl border border-gray-100 dark:border-white/5"
+                        className="relative w-full max-w-xl bg-white rounded-[32px] overflow-hidden shadow-2xl border border-gray-100 "
                     >
                         {/* Header */}
-                        <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-white/5 bg-white dark:bg-navy-dark">
+                        <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-white ">
                             <div>
-                                <h3 className="text-xl font-black text-gray-800 dark:text-white uppercase tracking-widest">Confirm Location</h3>
+                                <h3 className="text-xl font-black text-gray-800 uppercase tracking-widest">Confirm Location</h3>
                                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">Verify your delivery address</p>
                             </div>
-                            <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full transition-colors text-gray-400">
+                            <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400">
                                 <X size={20} />
                             </button>
                         </div>
 
-                        <div className="p-8 bg-gray-50 dark:bg-[#0D1B2A]">
+                        <div className="p-8 bg-gray-50 ">
                             <div className="max-w-md mx-auto space-y-8">
-                                <div className="flex items-center justify-between p-4 bg-white dark:bg-navy-light rounded-[24px] shadow-sm border border-gray-100 dark:border-white/5">
+                                <div className="flex items-center justify-between p-4 bg-white rounded-[24px] shadow-sm border border-gray-100 ">
                                     <div className="flex items-center space-x-3 text-brand-primary">
                                         <div className="p-3 bg-brand-primary/10 rounded-2xl">
                                             <Navigation size={24} />
@@ -120,30 +120,30 @@ const LocationPickerModal = ({ isOpen, onClose, onConfirm, initialLocation }) =>
                                     </div>
                                     
                                     {loading ? (
-                                        <div className="flex flex-col items-center py-12 text-gray-400 bg-white dark:bg-navy-light rounded-[32px] border border-dashed border-gray-200 dark:border-white/10">
+                                        <div className="flex flex-col items-center py-12 text-gray-400 bg-white rounded-[32px] border border-dashed border-gray-200 ">
                                             <Loader2 size={32} className="animate-spin mb-4 text-brand-primary" />
                                             <p className="text-[10px] font-bold uppercase tracking-widest">Fetching Address...</p>
                                         </div>
                                     ) : (
-                                        <div className="space-y-5 bg-white dark:bg-navy-light p-6 rounded-[32px] shadow-sm border border-gray-100 dark:border-white/5">
+                                        <div className="space-y-5 bg-white p-6 rounded-[32px] shadow-sm border border-gray-100 ">
                                             <div>
                                                 <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Selected Area</label>
-                                                <p className="text-lg font-black text-gray-800 dark:text-white leading-tight">{addressDetails.label || 'Not detected'}</p>
+                                                <p className="text-lg font-black text-gray-800 leading-tight">{addressDetails.label || 'Not detected'}</p>
                                             </div>
                                             
                                             <div>
                                                 <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Street Details</label>
-                                                <p className="text-sm font-bold text-gray-600 dark:text-gray-400 leading-snug">{addressDetails.street || '-'}</p>
+                                                <p className="text-sm font-bold text-gray-600 leading-snug">{addressDetails.street || '-'}</p>
                                             </div>
 
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div>
                                                     <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">City</label>
-                                                    <p className="text-sm font-bold text-gray-800 dark:text-white">{addressDetails.city || '-'}</p>
+                                                    <p className="text-sm font-bold text-gray-800 ">{addressDetails.city || '-'}</p>
                                                 </div>
                                                 <div>
                                                     <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Pincode</label>
-                                                    <p className="text-sm font-bold text-gray-800 dark:text-white">{addressDetails.pincode || '-'}</p>
+                                                    <p className="text-sm font-bold text-gray-800 ">{addressDetails.pincode || '-'}</p>
                                                 </div>
                                             </div>
                                         </div>

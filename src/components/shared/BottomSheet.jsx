@@ -47,24 +47,24 @@ const BottomSheet = ({ isOpen, onClose, title, children, snapPoints = ['100%'] }
                 onClose();
               }
             }}
-            className={`fixed bottom-0 left-0 right-0 md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-xl max-h-[90vh] bg-white dark:bg-navy-dark rounded-t-[32px] md:rounded-[32px] z-[101] shadow-2xl flex flex-col overflow-hidden border border-gray-100 dark:border-white/10`}
+            className={`fixed bottom-0 left-0 right-0 md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-xl max-h-[90vh] bg-white rounded-t-[32px] md:rounded-[32px] z-[101] shadow-2xl flex flex-col overflow-hidden border border-gray-100 
           >
             {/* Drag Handle (Mobile Only) */}
             <div className="md:hidden w-full flex justify-center py-4 cursor-grab active:cursor-grabbing">
-              <div className="w-12 h-1.5 bg-gray-300 dark:bg-gray-700 rounded-full" />
+              <div className="w-12 h-1.5 bg-gray-300 rounded-full" />
             </div>
 
             {/* Desktop Close Indicator (Brief) */}
             <div className="hidden md:flex justify-end p-4 pb-0">
-               <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full transition-colors text-gray-400">
+               <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400">
                   <svg size={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                </button>
             </div>
 
             {/* Title (Optional) */}
             {title && (
-              <div className="px-8 pb-4 border-b border-gray-100 dark:border-white/5 shrink-0">
-                <h2 className="text-xl font-heading font-extrabold text-gray-900 dark:text-white uppercase tracking-tight">{title}</h2>
+              <div className="px-8 pb-4 border-b border-gray-100 shrink-0">
+                <h2 className="text-xl font-heading font-extrabold text-gray-900 uppercase tracking-tight">{title}</h2>
               </div>
             )}
 

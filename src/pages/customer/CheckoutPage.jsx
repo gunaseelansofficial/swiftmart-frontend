@@ -210,25 +210,25 @@ const CheckoutPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-light-bg dark:bg-dark-bg transition-colors">
+        <div className="min-h-screen bg-light-bg transition-colors">
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div className="flex items-center space-x-2 text-xs font-bold text-gray-400 uppercase tracking-widest mb-10">
                     <Link to="/cart" className="hover:text-brand-primary flex items-center"><ChevronLeft size={14} className="mr-1" /> Back to Cart</Link>
-                    <span className="text-gray-200 dark:text-white/10">/</span>
-                    <span className="text-gray-600 dark:text-gray-400">Secure Checkout</span>
+                    <span className="text-gray-200 ">/</span>
+                    <span className="text-gray-600 ">Secure Checkout</span>
                 </div>
 
                 <div className="flex flex-col lg:flex-row gap-6 md:gap-12">
                     {/* Main Checkout content */}
                     <div className="flex-1 space-y-4 md:space-y-8 md:mb-0 mb-32">
                         {/* Step 1: Address */}
-                        <section className="bg-white dark:bg-white/5 rounded-xl md:rounded-md p-5 md:p-8 shadow-sm md:shadow-card border border-gray-100 dark:border-white/5 relative overflow-hidden">
+                        <section className="bg-white rounded-xl md:rounded-md p-5 md:p-8 shadow-sm md:shadow-card border border-gray-100 relative overflow-hidden">
                             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 md:mb-8 gap-4 sm:gap-0">
                                 <div className="flex items-center space-x-3">
                                     <div className="w-8 h-8 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold">1</div>
-                                    <h2 className="text-xl font-heading font-extrabold text-gray-800 dark:text-white uppercase tracking-widest">Delivery Address</h2>
+                                    <h2 className="text-xl font-heading font-extrabold text-gray-800 uppercase tracking-widest">Delivery Address</h2>
                                 </div>
                                 <button
                                     onClick={() => setShowAddressForm(!showAddressForm)}
@@ -240,7 +240,7 @@ const CheckoutPage = () => {
                             </div>
 
                             {!user?.addresses || user.addresses.length === 0 ? (
-                                <div className="py-12 text-center bg-gray-50 dark:bg-white/5 rounded-2xl border-2 border-dashed border-gray-100 dark:border-white/10 text-gray-400">
+                                <div className="py-12 text-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-100 text-gray-400">
                                     <MapPin size={40} className="mx-auto mb-4 opacity-20" />
                                     <p className="text-sm font-bold uppercase tracking-widest mb-4">No addresses saved yet</p>
                                     <button 
@@ -258,17 +258,17 @@ const CheckoutPage = () => {
                                             onClick={() => setSelectedAddress(addr._id)}
                                             className={`p-4 rounded-xl md:rounded-md border-2 cursor-pointer transition-all tap-target ${selectedAddress === addr._id
                                                 ? 'border-brand-primary bg-brand-primary/5'
-                                                : 'border-gray-50 dark:border-white/5 bg-gray-50 dark:bg-white/5 hover:border-brand-primary/20'
+                                                : 'border-gray-50 bg-gray-50 hover:border-brand-primary/20'
                                                 }`}
                                         >
                                             <div className="flex justify-between mb-2">
                                                 <span className="text-[10px] font-bold text-brand-primary uppercase tracking-widest">{addr.label || addr.type}</span>
                                                 {selectedAddress === addr._id && <CheckCircle2 size={16} className="text-brand-primary" />}
                                             </div>
-                                            <p className="text-sm text-gray-800 dark:text-white font-bold mb-1">{addr.street}</p>
-                                            <p className="text-xs text-text-muted dark:text-gray-400 mb-2">{addr.city}, {addr.pincode}</p>
+                                            <p className="text-sm text-gray-800 font-bold mb-1">{addr.street}</p>
+                                            <p className="text-xs text-text-muted mb-2">{addr.city}, {addr.pincode}</p>
                                             {addr.phone && (
-                                                <div className="flex items-center space-x-2 text-[10px] font-bold text-gray-500 bg-gray-100 dark:bg-white/5 w-fit px-2 py-1 rounded">
+                                                <div className="flex items-center space-x-2 text-[10px] font-bold text-gray-500 bg-gray-100 w-fit px-2 py-1 rounded">
                                                     <span>📞 {addr.phone}</span>
                                                 </div>
                                             )}
@@ -298,10 +298,10 @@ const CheckoutPage = () => {
                         </section>
 
                         {/* Step 2: Delivery Type */}
-                        <section className="bg-white dark:bg-white/5 rounded-xl md:rounded-md p-5 md:p-8 shadow-sm md:shadow-card border border-gray-100 dark:border-white/5">
+                        <section className="bg-white rounded-xl md:rounded-md p-5 md:p-8 shadow-sm md:shadow-card border border-gray-100 ">
                             <div className="flex items-center space-x-3 mb-6 md:mb-8">
                                 <div className="w-8 h-8 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold">2</div>
-                                <h2 className="text-xl font-heading font-extrabold text-gray-800 dark:text-white uppercase tracking-widest">Delivery Type</h2>
+                                <h2 className="text-xl font-heading font-extrabold text-gray-800 uppercase tracking-widest">Delivery Type</h2>
                             </div>
                             <div className="grid grid-cols-1 gap-3 md:gap-6">
                                 <div className="flex items-center p-4 md:p-6 rounded-xl md:rounded-md border-2 transition-all border-brand-primary bg-brand-primary/5 shadow-lg">
@@ -309,18 +309,18 @@ const CheckoutPage = () => {
                                         <Clock size={24} />
                                     </div>
                                     <div className="text-left">
-                                        <p className="font-bold text-gray-800 dark:text-white">⚡ Express Delivery</p>
-                                        <p className="text-xs text-text-muted dark:text-gray-400">In 10-15 minutes • Free above ₹299</p>
+                                        <p className="font-bold text-gray-800 ">⚡ Express Delivery</p>
+                                        <p className="text-xs text-text-muted ">In 10-15 minutes • Free above ₹299</p>
                                     </div>
                                 </div>
                             </div>
                         </section>
 
                         {/* Step 3: Payment */}
-                        <section className="bg-white dark:bg-white/5 rounded-xl md:rounded-md p-5 md:p-8 shadow-sm md:shadow-card border border-gray-100 dark:border-white/5">
+                        <section className="bg-white rounded-xl md:rounded-md p-5 md:p-8 shadow-sm md:shadow-card border border-gray-100 ">
                             <div className="flex items-center space-x-3 mb-6 md:mb-8">
                                 <div className="w-8 h-8 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold">3</div>
-                                <h2 className="text-xl font-heading font-extrabold text-gray-800 dark:text-white uppercase tracking-widest">Payment Method</h2>
+                                <h2 className="text-xl font-heading font-extrabold text-gray-800 uppercase tracking-widest">Payment Method</h2>
                             </div>
                             <div className="space-y-3 md:space-y-4">
                                 {[
@@ -332,14 +332,14 @@ const CheckoutPage = () => {
                                         onClick={() => setPaymentMethod(method.id)}
                                         className={`w-full flex items-center p-4 rounded-xl md:rounded-md border-2 transition-all tap-target ${paymentMethod === method.id
                                             ? 'border-brand-primary bg-brand-primary/5'
-                                            : 'border-gray-50 dark:border-white/5 bg-gray-50 dark:bg-white/5'
+                                            : 'border-gray-50 bg-gray-50 '
                                             }`}
                                     >
                                         <div className={`mr-4 ${paymentMethod === method.id ? 'text-brand-primary' : 'text-gray-400'}`}>
                                             {method.icon}
                                         </div>
                                         <div className="text-left flex-1">
-                                            <p className="font-bold text-gray-800 dark:text-white text-sm">{method.name}</p>
+                                            <p className="font-bold text-gray-800 text-sm">{method.name}</p>
                                             <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{method.sub}</p>
                                         </div>
                                         {paymentMethod === method.id && <CheckCircle2 size={16} className="text-brand-primary" />}
@@ -351,20 +351,20 @@ const CheckoutPage = () => {
 
                     {/* Right Summary */}
                     <aside className="w-full lg:w-96 hidden md:block">
-                        <div className="bg-white dark:bg-white/5 rounded-md p-8 shadow-card border border-gray-100 dark:border-white/5 sticky top-32">
-                            <h4 className="font-bold text-gray-800 dark:text-white uppercase text-xs tracking-widest mb-6 border-b border-gray-50 dark:border-white/10 pb-4">Order Summary</h4>
+                        <div className="bg-white rounded-md p-8 shadow-card border border-gray-100 sticky top-32">
+                            <h4 className="font-bold text-gray-800 uppercase text-xs tracking-widest mb-6 border-b border-gray-50 pb-4">Order Summary</h4>
                             <div className="space-y-4 max-h-[300px] overflow-y-auto mb-6 pr-2 scrollbar-none">
                                 {items.map(item => (
                                     <div key={item._id} className="flex justify-between items-center text-sm">
-                                        <span className="text-text-muted dark:text-gray-400 line-clamp-1 flex-1 pr-4">{item.name} <span className="font-bold ml-1">x{item.quantity}</span></span>
-                                        <span className="font-bold text-gray-800 dark:text-white">₹{item.price * item.quantity}</span>
+                                        <span className="text-text-muted line-clamp-1 flex-1 pr-4">{item.name} <span className="font-bold ml-1">x{item.quantity}</span></span>
+                                        <span className="font-bold text-gray-800 ">₹{item.price * item.quantity}</span>
                                     </div>
                                 ))}
                             </div>
 
-                            <div className="space-y-3 pt-6 border-t border-gray-50 dark:border-white/5 mb-10">
+                            <div className="space-y-3 pt-6 border-t border-gray-50 mb-10">
                                 <div className="flex justify-between text-sm">
-                                    <span className="text-gray-500 dark:text-gray-400">Bill Total</span>
+                                    <span className="text-gray-500 ">Bill Total</span>
                                     <span className="font-bold text-gray-400 line-through">₹{totalAmount + 150}</span>
                                 </div>
                                 <div className="flex justify-between text-sm text-green-600">
@@ -372,17 +372,17 @@ const CheckoutPage = () => {
                                     <span className="font-bold">-₹150</span>
                                 </div>
                                 <div className="flex justify-between text-sm">
-                                    <span className="text-gray-500 dark:text-gray-400">Delivery Fee</span>
-                                    <span className={`font-bold ${deliveryFee === 0 ? 'text-green-600' : 'text-gray-800 dark:text-white'}`}>
+                                    <span className="text-gray-500 ">Delivery Fee</span>
+                                    <span className={`font-bold ${deliveryFee === 0 ? 'text-green-600' : 'text-gray-800 '}`}>
                                         {deliveryFee === 0 ? 'FREE' : `₹${deliveryFee}`}
                                     </span>
                                 </div>
                                 <div className="flex justify-between text-sm">
-                                    <span className="text-gray-500 dark:text-gray-400">GST (5%)</span>
-                                    <span className="font-bold text-gray-800 dark:text-white">₹{gst}</span>
+                                    <span className="text-gray-500 ">GST (5%)</span>
+                                    <span className="font-bold text-gray-800 ">₹{gst}</span>
                                 </div>
-                                <div className="flex justify-between items-center pt-4 mt-4 border-t border-gray-100 dark:border-white/10">
-                                    <span className="text-lg font-heading font-extrabold text-gray-800 dark:text-white">Grand Total</span>
+                                <div className="flex justify-between items-center pt-4 mt-4 border-t border-gray-100 ">
+                                    <span className="text-lg font-heading font-extrabold text-gray-800 ">Grand Total</span>
                                     <span className="text-2xl font-heading font-extrabold text-brand-primary">₹{finalTotal}</span>
                                 </div>
                             </div>
@@ -402,7 +402,7 @@ const CheckoutPage = () => {
                                 )}
                             </button>
 
-                            <div className="mt-8 flex items-center justify-center space-x-2 text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest bg-gray-50 dark:bg-white/5 p-3 rounded">
+                            <div className="mt-8 flex items-center justify-center space-x-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest bg-gray-50 p-3 rounded">
                                 <ShieldCheck size={14} className="text-brand-primary" />
                                 <span>100% Encrypted Payments • Trusted by 10k+</span>
                             </div>
@@ -412,10 +412,10 @@ const CheckoutPage = () => {
             </main>
 
             {/* Mobile Fixed Bill Summary & Checkout */}
-            <div className="md:hidden fixed bottom-[60px] left-0 w-full bg-white dark:bg-dark-bg border-t border-gray-100 dark:border-white/5 p-4 z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.05)] rounded-t-3xl space-y-4">
-                <div className="flex justify-between items-center bg-gray-50 dark:bg-white/5 p-3 rounded-xl border border-gray-100 dark:border-white/5">
+            <div className="md:hidden fixed bottom-[60px] left-0 w-full bg-white border-t border-gray-100 p-4 z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.05)] rounded-t-3xl space-y-4">
+                <div className="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-100 ">
                     <div className="flex flex-col">
-                        <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Total Amount</span>
+                        <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Total Amount</span>
                         <span className="text-lg font-heading font-extrabold text-brand-primary leading-none">₹{finalTotal}</span>
                     </div>
                 </div>

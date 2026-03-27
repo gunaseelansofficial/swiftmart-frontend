@@ -63,7 +63,7 @@ const CartPage = () => {
 
     if (items.length === 0) {
         return (
-            <div className="min-h-screen bg-main-bg dark:bg-dark-bg transition-colors">
+            <div className="min-h-screen bg-main-bg transition-colors">
                 <Navbar />
                 <div className="max-w-7xl mx-auto px-4 py-20 text-center">
                     <div className="w-64 h-64 bg-brand-bg-light rounded-full flex items-center justify-center mx-auto mb-8">
@@ -80,17 +80,17 @@ const CartPage = () => {
     }
 
     return (
-        <div className="min-h-screen bg-main-bg dark:bg-dark-bg transition-colors">
+        <div className="min-h-screen bg-main-bg transition-colors">
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <div className="flex items-center space-x-2 text-[10px] font-bold text-text-secondary dark:text-gray-400 uppercase tracking-[0.15em] mb-4">
+                <div className="flex items-center space-x-2 text-[10px] font-bold text-text-secondary uppercase tracking-[0.15em] mb-4">
                     <Link to="/" className="hover:text-brand-primary transition-colors">Home</Link>
                     <ChevronRight size={10} strokeWidth={3} />
-                    <span className="text-text-primary dark:text-white">Shopping Cart</span>
+                    <span className="text-text-primary ">Shopping Cart</span>
                 </div>
 
-                <h1 className="text-3xl font-bold text-text-primary dark:text-white mb-10 tracking-tight">Your Basket ({items.length} items)</h1>
+                <h1 className="text-3xl font-bold text-text-primary mb-10 tracking-tight">Your Basket ({items.length} items)</h1>
 
                 <div className="flex flex-col lg:flex-row gap-6 md:gap-12">
                     {/* Cart Items */}
@@ -103,7 +103,7 @@ const CartPage = () => {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, x: -100 }}
-                                    className="bg-white dark:bg-white/5 rounded-xl md:rounded-md p-4 md:p-6 shadow-sm md:shadow-card border border-gray-100 dark:border-white/10 flex items-center space-x-4 md:space-x-6 relative"
+                                    className="bg-white rounded-xl md:rounded-md p-4 md:p-6 shadow-sm md:shadow-card border border-gray-100 flex items-center space-x-4 md:space-x-6 relative"
                                 >
                                     <div className="w-20 h-20 md:w-24 md:h-24 bg-gray-50 rounded-lg md:rounded-md overflow-hidden shrink-0 border border-gray-100">
                                         <img 
@@ -238,15 +238,15 @@ const CartPage = () => {
             </main>
 
             {/* Mobile Fixed Bill Summary & Checkout */}
-            <div className="md:hidden fixed bottom-[64px] left-0 w-full bg-white dark:bg-dark-bg border-t border-gray-100 dark:border-white/5 p-4 z-40 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] rounded-t-[32px] space-y-4">
+            <div className="md:hidden fixed bottom-[64px] left-0 w-full bg-white border-t border-gray-100 p-4 z-40 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] rounded-t-[32px] space-y-4">
                 {/* Collapsible details for mobile could be added here, kept simple for now */}
-                <div className="flex justify-between items-center bg-brand-bg-light dark:bg-white/5 p-4 rounded-2xl border border-brand-primary/5">
+                <div className="flex justify-between items-center bg-brand-bg-light p-4 rounded-2xl border border-brand-primary/5">
                     <div className="flex flex-col">
                         <span className="text-[10px] font-black text-brand-primary/60 uppercase tracking-widest">To Pay</span>
-                        <span className="text-xl font-bold text-text-primary dark:text-white leading-none">₹{finalTotal}</span>
+                        <span className="text-xl font-bold text-text-primary leading-none">₹{finalTotal}</span>
                     </div>
                     <div className="text-right flex flex-col items-end">
-                         <span className="text-[9px] font-bold text-text-secondary dark:text-gray-400 uppercase tracking-widest px-2 py-0.5 bg-white dark:bg-navy-dark rounded-md mb-0.5">Includes {gst} GST & {deliveryFee===0?'Free':`₹${deliveryFee}`} Del</span>
+                         <span className="text-[9px] font-bold text-text-secondary uppercase tracking-widest px-2 py-0.5 bg-white rounded-md mb-0.5">Includes {gst} GST & {deliveryFee===0?'Free':`₹${deliveryFee}`} Del</span>
                          {discount > 0 && <span className="text-[9px] font-black text-green-600 uppercase tracking-widest mt-1">Saved ₹{discount}</span>}
                     </div>
                 </div>

@@ -84,7 +84,7 @@ const NotificationPopover = ({ color = 'text-gray-500' }) => {
             >
                 <Bell size={22} />
                 {unreadCount > 0 && (
-                    <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-coral-accent text-white text-[8px] font-black rounded-full flex items-center justify-center border-2 border-white dark:border-[#1B263B]">
+                    <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-coral-accent text-white text-[8px] font-black rounded-full flex items-center justify-center border-2 border-white ">
                         {unreadCount}
                     </span>
                 )}
@@ -96,10 +96,10 @@ const NotificationPopover = ({ color = 'text-gray-500' }) => {
                         initial={{ opacity: 0, scale: 0.95, y: 10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                        className="absolute right-0 mt-4 w-80 bg-white dark:bg-dark-bg rounded-[24px] shadow-2xl border border-gray-100 dark:border-white/10 overflow-hidden z-[100]"
+                        className="absolute right-0 mt-4 w-80 bg-white rounded-[24px] shadow-2xl border border-gray-100 overflow-hidden z-[100]"
                     >
-                        <div className="p-4 border-b border-gray-50 dark:border-white/5 flex items-center justify-between bg-gray-50/50 dark:bg-white/5">
-                            <h3 className="text-[10px] font-black uppercase tracking-widest text-gray-800 dark:text-white">Notifications</h3>
+                        <div className="p-4 border-b border-gray-50 flex items-center justify-between bg-gray-50/50 ">
+                            <h3 className="text-[10px] font-black uppercase tracking-widest text-gray-800 ">Notifications</h3>
                             {unreadCount > 0 && (
                                 <button
                                     onClick={() => dispatch(markAllAsRead())}
@@ -116,13 +116,13 @@ const NotificationPopover = ({ color = 'text-gray-500' }) => {
                                     <div
                                         key={n.id}
                                         onClick={() => handleNotificationClick(n)}
-                                        className={`p-4 border-b border-gray-50 dark:border-white/5 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer flex items-start space-x-3 ${!n.read ? 'bg-brand-primary/5' : ''}`}
+                                        className={`p-4 border-b border-gray-50 hover:bg-gray-50 transition-colors cursor-pointer flex items-start space-x-3 ${!n.read ? 'bg-brand-primary/5' : ''}`}
                                     >
-                                        <div className={`mt-1 w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${!n.read ? 'bg-brand-primary text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-400'}`}>
+                                        <div className={`mt-1 w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${!n.read ? 'bg-brand-primary text-white' : 'bg-gray-100 text-gray-400'}`}>
                                             <ShoppingBag size={14} />
                                         </div>
                                         <div className="flex-1">
-                                            <p className="text-xs font-bold text-gray-800 dark:text-gray-200 leading-tight">{n.title}</p>
+                                            <p className="text-xs font-bold text-gray-800 leading-tight">{n.title}</p>
                                             <p className="text-[11px] text-gray-500 mt-1 line-clamp-2">{n.message}</p>
 
                                             {n.type === 'new_request' && !n.read && (
@@ -142,7 +142,7 @@ const NotificationPopover = ({ color = 'text-gray-500' }) => {
                                                             e.stopPropagation();
                                                             handleDeclineOrder(n);
                                                         }}
-                                                        className="py-2.5 bg-gray-100 dark:bg-gray-800 text-gray-500 text-[9px] font-black uppercase tracking-widest rounded-xl flex items-center justify-center space-x-1"
+                                                        className="py-2.5 bg-gray-100 text-gray-500 text-[9px] font-black uppercase tracking-widest rounded-xl flex items-center justify-center space-x-1"
                                                     >
                                                         <X size={12} />
                                                         <span>Ignore</span>
@@ -163,7 +163,7 @@ const NotificationPopover = ({ color = 'text-gray-500' }) => {
                                 ))
                             ) : (
                                 <div className="p-10 text-center">
-                                    <div className="w-12 h-12 bg-gray-50 dark:bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-300">
+                                    <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-300">
                                         <Bell size={20} />
                                     </div>
                                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">No new updates</p>

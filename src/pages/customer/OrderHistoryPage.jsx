@@ -107,22 +107,22 @@ const OrderHistoryPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-light-bg dark:bg-dark-bg transition-colors pb-24 md:pb-12">
+        <div className="min-h-screen bg-light-bg transition-colors pb-24 md:pb-12">
             <Navbar />
             <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefreshing}>
                 <main className="max-w-4xl mx-auto px-4 py-8 md:py-12">
-                    <h1 className="text-2xl md:text-3xl font-heading font-extrabold text-[#1A1A2E] dark:text-white mb-8 md:mb-12 uppercase italic tracking-tighter decoration-brand-primary underline underline-offset-8">My Orders</h1>
+                    <h1 className="text-2xl md:text-3xl font-heading font-extrabold text-[#1A1A2E] mb-8 md:mb-12 uppercase italic tracking-tighter decoration-brand-primary underline underline-offset-8">My Orders</h1>
 
                 {loading ? (
                     <div className="space-y-6">
                         {Array(3).fill(0).map((_, i) => (
-                            <div key={i} className="h-40 bg-white dark:bg-white/5 rounded-3xl animate-pulse border border-gray-100 dark:border-white/5 shadow-sm" />
+                            <div key={i} className="h-40 bg-white rounded-3xl animate-pulse border border-gray-100 shadow-sm" />
                         ))}
                     </div>
                 ) : orders.length === 0 ? (
-                    <div className="text-center py-20 bg-white dark:bg-white/5 rounded-[40px] border border-gray-100 dark:border-white/5 shadow-xl">
-                        <Package size={80} className="mx-auto text-gray-100 dark:text-gray-800 mb-8" />
-                        <h3 className="text-2xl font-black text-gray-800 dark:text-white mb-3 uppercase tracking-tighter italic">No orders yet</h3>
+                    <div className="text-center py-20 bg-white rounded-[40px] border border-gray-100 shadow-xl">
+                        <Package size={80} className="mx-auto text-gray-100 mb-8" />
+                        <h3 className="text-2xl font-black text-gray-800 mb-3 uppercase tracking-tighter italic">No orders yet</h3>
                         <p className="text-gray-400 font-medium mb-12">You haven't placed any orders with us yet.</p>
                         <Link to="/" className="btn-primary !py-4 px-12 rounded-2xl shadow-xl shadow-brand-primary/20">Browse Products</Link>
                     </div>
@@ -134,7 +134,7 @@ const OrderHistoryPage = () => {
                                 layout
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className={`bg-white dark:bg-white/5 rounded-[32px] border border-gray-100 dark:border-white/10 shadow-xl shadow-blue-900/5 overflow-hidden transition-all duration-300 ${expandedOrderId === order._id ? 'ring-2 ring-brand-primary/20' : ''}`}
+                                className={`bg-white rounded-[32px] border border-gray-100 shadow-xl shadow-blue-900/5 overflow-hidden transition-all duration-300 ${expandedOrderId === order._id ? 'ring-2 ring-brand-primary/20' : ''}`}
                             >
                                 {/* Header Section */}
                                 <div 
@@ -148,12 +148,12 @@ const OrderHistoryPage = () => {
                                             </div>
                                             <div>
                                                 <div className="flex items-center space-x-3 mb-1">
-                                                    <p className="text-lg font-black text-[#1A1A2E] dark:text-white tracking-tight">#{order.orderId || order._id.slice(-6).toUpperCase()}</p>
+                                                    <p className="text-lg font-black text-[#1A1A2E] tracking-tight">#{order.orderId || order._id.slice(-6).toUpperCase()}</p>
                                                     <span className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest ${getStatusColor(order.status)}`}>
                                                         {order.status.replace('_', ' ')}
                                                     </span>
                                                 </div>
-                                                <div className="flex items-center space-x-3 text-[10px] font-black text-gray-400 uppercase tracking-widest bg-gray-50 dark:bg-white/5 px-2 py-1 rounded-lg w-fit">
+                                                <div className="flex items-center space-x-3 text-[10px] font-black text-gray-400 uppercase tracking-widest bg-gray-50 px-2 py-1 rounded-lg w-fit">
                                                     <span className="flex items-center"><Calendar size={12} className="mr-1.5" /> {format(new Date(order.createdAt), 'dd MMM, yyyy')}</span>
                                                     <span>•</span>
                                                     <span className="flex items-center"><Clock size={12} className="mr-1.5" /> {format(new Date(order.createdAt), 'hh:mm a')}</span>
@@ -168,7 +168,7 @@ const OrderHistoryPage = () => {
                                             </div>
                                             <motion.div
                                                 animate={{ rotate: expandedOrderId === order._id ? 180 : 0 }}
-                                                className="w-10 h-10 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center text-gray-400 group-hover:text-brand-primary transition-colors"
+                                                className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:text-brand-primary transition-colors"
                                             >
                                                 <ChevronRight size={20} />
                                             </motion.div>
@@ -184,7 +184,7 @@ const OrderHistoryPage = () => {
                                             animate={{ height: 'auto', opacity: 1 }}
                                             exit={{ height: 0, opacity: 0 }}
                                             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                                            className="border-t border-gray-100 dark:border-white/5"
+                                            className="border-t border-gray-100 "
                                         >
                                             <div className="p-6 md:p-10 space-y-10">
                                                 {/* Items Area */}
@@ -192,8 +192,8 @@ const OrderHistoryPage = () => {
                                                     <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-300 italic mb-6">Ordered Items</h4>
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         {order.items.map((item, idx) => (
-                                                            <div key={idx} className="bg-gray-50 dark:bg-white/5 p-4 rounded-3xl flex items-center space-x-4 border border-gray-100 dark:border-white/5 group/item transition-all hover:bg-white dark:hover:bg-white/10 hover:shadow-lg hover:shadow-blue-900/5">
-                                                                <div className="w-16 h-16 rounded-2xl bg-white dark:bg-navy-dark overflow-hidden p-2 shrink-0 border border-gray-100 dark:border-white/10 group-hover/item:rotate-3 transition-transform">
+                                                            <div key={idx} className="bg-gray-50 p-4 rounded-3xl flex items-center space-x-4 border border-gray-100 group/item transition-all hover:bg-white hover:shadow-lg hover:shadow-blue-900/5">
+                                                                <div className="w-16 h-16 rounded-2xl bg-white overflow-hidden p-2 shrink-0 border border-gray-100 group-hover/item:rotate-3 transition-transform">
                                                                     <img 
                                                                         src={getImageUrl(item.product?.images?.[0] || item.product?.image)} 
                                                                         alt="" 
@@ -202,16 +202,16 @@ const OrderHistoryPage = () => {
                                                                     />
                                                                 </div>
                                                                 <div className="flex-1 min-w-0">
-                                                                    <p className="text-sm font-black text-gray-800 dark:text-gray-200 line-clamp-1 truncate">{item.product?.name || 'Product'}</p>
+                                                                    <p className="text-sm font-black text-gray-800 line-clamp-1 truncate">{item.product?.name || 'Product'}</p>
                                                                     <div className="flex justify-between items-center mt-1">
                                                                         <p className="text-[11px] text-gray-400 font-black uppercase tracking-widest">Qty: {item.quantity}</p>
-                                                                        <p className="text-sm font-black text-gray-800 dark:text-white italic">₹{item.price * item.quantity}</p>
+                                                                        <p className="text-sm font-black text-gray-800 italic">₹{item.price * item.quantity}</p>
                                                                     </div>
                                                                 </div>
                                                                 {order.status === 'delivered' && (
                                                                     <button
                                                                         onClick={(e) => handleRateProduct(e, item.product._id)}
-                                                                        className="p-3 bg-white dark:bg-white/10 rounded-2xl text-brand-primary border border-brand-primary/20 hover:bg-brand-primary hover:text-white transition-all shadow-lg shadow-brand-primary/10"
+                                                                        className="p-3 bg-white rounded-2xl text-brand-primary border border-brand-primary/20 hover:bg-brand-primary hover:text-white transition-all shadow-lg shadow-brand-primary/10"
                                                                         title="Rate Product"
                                                                     >
                                                                         <Star size={18} />
@@ -223,14 +223,14 @@ const OrderHistoryPage = () => {
                                                 </div>
 
                                                 {/* Summary Grid */}
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-gray-100 dark:border-white/5">
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-gray-100 ">
                                                     {/* Delivery Info */}
                                                     <div className="space-y-4">
                                                         <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-300 italic">Delivery Info</h4>
-                                                        <div className="flex items-start space-x-3 text-gray-600 dark:text-gray-400">
+                                                        <div className="flex items-start space-x-3 text-gray-600 ">
                                                             <MapPin size={18} className="shrink-0 text-brand-primary mt-1" />
                                                             <div>
-                                                                <p className="text-xs font-bold text-gray-800 dark:text-gray-200">{order.shippingAddress?.street || 'N/A'}</p>
+                                                                <p className="text-xs font-bold text-gray-800 ">{order.shippingAddress?.street || 'N/A'}</p>
                                                                 <p className="text-[10px] font-medium leading-relaxed">{order.shippingAddress?.city}, {order.shippingAddress?.pincode}</p>
                                                             </div>
                                                         </div>
@@ -239,7 +239,7 @@ const OrderHistoryPage = () => {
                                                     {/* Payment Breakdown */}
                                                     <div className="space-y-4">
                                                         <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-300 italic">Payment Details</h4>
-                                                        <div className="space-y-2 bg-gray-50 dark:bg-white/5 p-6 rounded-3xl border border-gray-100 dark:border-white/5">
+                                                        <div className="space-y-2 bg-gray-50 p-6 rounded-3xl border border-gray-100 ">
                                                             <div className="flex justify-between text-[11px] font-bold text-gray-500">
                                                                 <span className="uppercase tracking-widest">Items Total</span>
                                                                 <span>₹{order.totalAmount}</span>
@@ -248,8 +248,8 @@ const OrderHistoryPage = () => {
                                                                 <span className="uppercase tracking-widest">Shipping Fee</span>
                                                                 <span>{order.finalAmount - order.totalAmount > 0 ? `₹${order.finalAmount - order.totalAmount}` : 'FREE'}</span>
                                                             </div>
-                                                            <div className="flex justify-between items-center pt-4 mt-2 border-t border-gray-200 dark:border-white/10">
-                                                                <span className="text-[10px] font-black text-[#1A1A2E] dark:text-white uppercase tracking-[0.2em]">Grand Total</span>
+                                                            <div className="flex justify-between items-center pt-4 mt-2 border-t border-gray-200 ">
+                                                                <span className="text-[10px] font-black text-[#1A1A2E] uppercase tracking-[0.2em]">Grand Total</span>
                                                                 <span className="text-xl font-heading font-extrabold text-brand-primary tracking-tighter italic">₹{order.finalAmount || order.totalAmount}</span>
                                                             </div>
                                                         </div>
@@ -311,12 +311,12 @@ const OrderHistoryPage = () => {
                             initial={{ scale: 0.9, y: 50, opacity: 0 }}
                             animate={{ scale: 1, y: 0, opacity: 1 }}
                             exit={{ scale: 0.9, y: 50, opacity: 0 }}
-                            className="bg-white dark:bg-navy-dark w-full max-w-sm rounded-[40px] shadow-2xl relative z-10 p-10 text-center border border-white/10 overflow-hidden"
+                            className="bg-white w-full max-w-sm rounded-[40px] shadow-2xl relative z-10 p-10 text-center border border-white/10 overflow-hidden"
                         >
                             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 bg-brand-primary/10 rounded-full -mt-20 blur-3xl" />
                             
-                            <h3 className="text-2xl font-heading font-extrabold text-[#1A1A2E] dark:text-white mb-3 uppercase italic tracking-tighter relative z-10">Rate Experience</h3>
-                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-10 font-medium relative z-10">How would you describe the quality?</p>
+                            <h3 className="text-2xl font-heading font-extrabold text-[#1A1A2E] mb-3 uppercase italic tracking-tighter relative z-10">Rate Experience</h3>
+                            <p className="text-sm text-gray-500 mb-10 font-medium relative z-10">How would you describe the quality?</p>
 
                             <div className="flex justify-center space-x-3 mb-10 relative z-10">
                                 {[1, 2, 3, 4, 5].map((star) => (
@@ -331,7 +331,7 @@ const OrderHistoryPage = () => {
                                             size={36}
                                             className={`${star <= (hover || rating)
                                                 ? 'fill-brand-accent text-brand-accent'
-                                                : 'text-gray-100 dark:text-white/10'
+                                                : 'text-gray-100 '
                                                 } transition-colors drop-shadow-[0_4px_10px_rgba(0,0,0,0.05)]`}
                                         />
                                     </button>
@@ -343,14 +343,14 @@ const OrderHistoryPage = () => {
                                     value={comment}
                                     onChange={(e) => setComment(e.target.value)}
                                     placeholder="Tell us what you loved about this product..."
-                                    className="w-full bg-gray-50 dark:bg-white/5 border-2 border-transparent focus:border-brand-primary/20 rounded-3xl p-6 text-sm font-medium focus:outline-none transition-all placeholder:text-gray-400 min-h-[120px] shadow-inner"
+                                    className="w-full bg-gray-50 border-2 border-transparent focus:border-brand-primary/20 rounded-3xl p-6 text-sm font-medium focus:outline-none transition-all placeholder:text-gray-400 min-h-[120px] shadow-inner"
                                 />
                             </div>
 
                             <div className="flex space-x-4 relative z-10">
                                 <button
                                     onClick={() => setSelectedProduct(null)}
-                                    className="flex-1 py-4 bg-gray-50 dark:bg-white/5 rounded-2xl font-black text-gray-400 text-[10px] uppercase tracking-widest hover:bg-gray-100 transition-colors"
+                                    className="flex-1 py-4 bg-gray-50 rounded-2xl font-black text-gray-400 text-[10px] uppercase tracking-widest hover:bg-gray-100 transition-colors"
                                 >
                                     Later
                                 </button>

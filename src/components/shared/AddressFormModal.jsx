@@ -11,15 +11,15 @@ const AddressFormModal = ({ isOpen, onClose, address, setAddress, onSave, onOpen
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="relative w-full max-w-xl bg-white dark:bg-navy-dark rounded-[32px] overflow-hidden shadow-2xl border border-gray-100 dark:border-white/5"
+                        className="relative w-full max-w-xl bg-white rounded-[32px] overflow-hidden shadow-2xl border border-gray-100 "
                     >
                         {/* Header */}
-                        <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-white/5 bg-white dark:bg-navy-dark">
+                        <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-white ">
                             <div>
-                                <h3 className="text-xl font-black text-gray-800 dark:text-white uppercase tracking-widest text-center">Enter Specific Delivery Details</h3>
+                                <h3 className="text-xl font-black text-gray-800 uppercase tracking-widest text-center">Enter Specific Delivery Details</h3>
                                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">Help our partner find your door faster</p>
                             </div>
-                            <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full transition-colors text-gray-400">
+                            <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400">
                                 <X size={20} />
                             </button>
                         </div>
@@ -29,10 +29,10 @@ const AddressFormModal = ({ isOpen, onClose, address, setAddress, onSave, onOpen
                                 {/* Location Summary (Non-editable or with change option) */}
                                 <div className="p-4 bg-brand-primary/5 border border-brand-primary/10 rounded-2xl relative">
                                     <label className="text-[9px] font-black text-brand-primary uppercase tracking-widest block mb-1">Detected Area</label>
-                                    <p className="text-sm font-bold text-gray-800 dark:text-white pr-10">{address.street || 'No area selected'}</p>
+                                    <p className="text-sm font-bold text-gray-800 pr-10">{address.street || 'No area selected'}</p>
                                     <button 
                                         onClick={onOpenLocationPicker}
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white dark:bg-navy-light text-brand-primary rounded-xl shadow-md"
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white text-brand-primary rounded-xl shadow-md"
                                         title="Change Area"
                                     >
                                         <Navigation size={18} />
@@ -47,7 +47,7 @@ const AddressFormModal = ({ isOpen, onClose, address, setAddress, onSave, onOpen
                                             placeholder="e.g. 402, 4th Floor"
                                             value={address.houseNo}
                                             onChange={(e) => setAddress({ ...address, houseNo: e.target.value })}
-                                            className="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-xl py-4 px-4 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 dark:text-white text-sm font-bold shadow-sm"
+                                            className="w-full bg-gray-50 border border-gray-100 rounded-xl py-4 px-4 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 text-sm font-bold shadow-sm"
                                         />
                                     </div>
 
@@ -58,7 +58,7 @@ const AddressFormModal = ({ isOpen, onClose, address, setAddress, onSave, onOpen
                                             placeholder="e.g. Block A"
                                             value={address.floor}
                                             onChange={(e) => setAddress({ ...address, floor: e.target.value })}
-                                            className="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-xl py-4 px-4 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 dark:text-white text-sm font-bold shadow-sm"
+                                            className="w-full bg-gray-50 border border-gray-100 rounded-xl py-4 px-4 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 text-sm font-bold shadow-sm"
                                         />
                                     </div>
 
@@ -69,7 +69,7 @@ const AddressFormModal = ({ isOpen, onClose, address, setAddress, onSave, onOpen
                                             placeholder="e.g. Near Apollo Hospital"
                                             value={address.landmark}
                                             onChange={(e) => setAddress({ ...address, landmark: e.target.value })}
-                                            className="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-xl py-4 px-4 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 dark:text-white text-sm font-bold shadow-sm"
+                                            className="w-full bg-gray-50 border border-gray-100 rounded-xl py-4 px-4 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 text-sm font-bold shadow-sm"
                                         />
                                     </div>
 
@@ -82,7 +82,7 @@ const AddressFormModal = ({ isOpen, onClose, address, setAddress, onSave, onOpen
                                                 placeholder="10-digit mobile number"
                                                 value={address.phone}
                                                 onChange={(e) => setAddress({ ...address, phone: e.target.value.replace(/\D/g, '').slice(0, 10) })}
-                                                className="w-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 dark:text-white text-base font-black shadow-inner"
+                                                className="w-full bg-white border border-gray-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 text-base font-black shadow-inner"
                                             />
                                         </div>
                                     </div>
@@ -94,7 +94,7 @@ const AddressFormModal = ({ isOpen, onClose, address, setAddress, onSave, onOpen
                                             placeholder="City"
                                             value={address.city}
                                             onChange={(e) => setAddress({ ...address, city: e.target.value })}
-                                            className="w-full bg-gray-50 dark:bg-white/10 border-0 rounded-xl py-3 px-4 text-xs font-bold text-gray-500"
+                                            className="w-full bg-gray-50 border-0 rounded-xl py-3 px-4 text-xs font-bold text-gray-500"
                                         />
                                     </div>
                                     <div className="col-span-1">
@@ -104,7 +104,7 @@ const AddressFormModal = ({ isOpen, onClose, address, setAddress, onSave, onOpen
                                             placeholder="Pincode"
                                             value={address.pincode}
                                             onChange={(e) => setAddress({ ...address, pincode: e.target.value })}
-                                            className="w-full bg-gray-50 dark:bg-white/10 border-0 rounded-xl py-3 px-4 text-xs font-bold text-gray-500"
+                                            className="w-full bg-gray-50 border-0 rounded-xl py-3 px-4 text-xs font-bold text-gray-500"
                                         />
                                     </div>
                                 </div>
